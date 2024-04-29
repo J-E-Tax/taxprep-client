@@ -102,7 +102,7 @@ function SignUpForm() {
                           *
                         </abbr>
                       </Label>
-                      <TextInput id="password-create-account-confirm" name="password-confirm" type={showPassword ? 'text' : 'password'} autoCapitalize="off" autoCorrect="off" required={true} />
+                      <TextInput id="password-create-account-confirm" name="password-confirm" type={showPassword ? 'text' : 'password'} autoCapitalize="off" autoCorrect="off" required={true} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
 
                       {error && <Alert type="error" heading="Error status" headingLevel="h4">{error}</Alert>}
 

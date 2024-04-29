@@ -12,8 +12,8 @@ interface TaxpayerInfo {
     address: string
 };
 
-export const getTaxpayerInfo = (taxpayerId: number) => {
-    return apiClient.get(`/taxpayer-info/${taxpayerId}`);
+export const getTaxpayerInfo = (userId: number) => {
+    return apiClient.get(`/taxpayer-info/${userId}`);
 }
 
 export const createTaxpayerInfo = (taxpayerInfo: TaxpayerInfo) => {

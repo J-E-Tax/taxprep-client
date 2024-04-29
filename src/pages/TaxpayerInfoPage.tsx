@@ -5,7 +5,7 @@ function TaxpayerInfoPage() {
 
     return (
         <div>
-            <h1>Taxpayer Info</h1>
+            <h2>Tell us about yourself</h2>
             <TaxpayerInfoForm />
         </div>
     );

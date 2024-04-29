@@ -1,109 +1,52 @@
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
-import { Button, Form, TextInput, FormGroup, Label, Textarea } from '@trussworks/react-uswds';
+import { Button, Form, TextInput, FormGroup, Label, Textarea, Fieldset, DatePicker, Select, RequiredMarker } from '@trussworks/react-uswds';
 import { createTaxpayerInfo, updateTaxpayerInfo } from '../../api/taxpayerApi';
 import { getTaxpayerInfo } from '../../api/taxpayerApi';
-import { setTaxpayerInfo, TaxpayerInfoState } from '../../features/taxpayerInfo/taxpayerInfoSlice';
+import { setTaxpayerInfo } from '../../features/taxpayerInfo/taxpayerInfoSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-
-interface Address {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-}
-
-interface TaxpayerFormData {
-    userId?: number;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    occupation: string;
-    ssn: string;
-    dob: string;
-    phoneNumber: string;
-    address: Address
-}
-
-interface TaxpayerInfoFormProps {
-    taxpayerInfo?: TaxpayerFormData | null;
-}
 
 function TaxpayerInfoForm () {
 
     const dispatch = useDispatch();
-    const taxpayerInfo = useSelector((state: RootState) => state.taxpayerInfo);;
-    const userIdTemp = 2; // temp userId for testing/development
-
-    const [taxpayerFormData, setTaxpayerFormData] = useState(taxpayerInfo || { // Initialize formData with initData or set default values
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        occupation: '',
-        ssn: '',
-        dob: '',
-        phoneNumber: '',
-        address: {
-            street: '',
-            city: '',
-            state: '',
-            zip: ''
-        },
-    });
+    const taxpayerInfo = useSelector((state: RootState) => state.taxpayerInfo); // get taxpayerInfo from Redux store
+    const userId = useSelector((state: RootState) => state.auth.userId); // Get current logged in user Id from the Redux store
 
     useEffect(() => {
-        getTaxpayerInfo(userIdTemp)
+        getTaxpayerInfo(userId)
             .then((res) => {
-                const formatData = {
+                dispatch(setTaxpayerInfo({
                     ...res.data,
-                    dob: new Date(res.data.dob).toISOString().split('T')[0], // Converts date of birth from the response to ISO string format, get the date part only to show in the front end
-                    address: JSON.parse(res.data.address), // parse address string to object
-                }
-                dispatch(setTaxpayerInfo(formatData));
+                    dob : res.data.dob ? new Date(res.data.dob).toISOString().split('T')[0] : "", // FORMAT dob
+                    address: res.data.address ? JSON.parse(res.data.address) : ""}));
             })
             .catch((err) => console.error(err));
-    }, [dispatch]);
+    }, [dispatch, userId]);
 
     useEffect(() => {
-        console.log("Initial taxpayerInfo from Redux:", taxpayerInfo);
+        console.log("TaxpayerInfo from Redux:", taxpayerInfo);
     }, [taxpayerInfo]);
 
-    useEffect(() => {
-        if (taxpayerInfo) {
-            setTaxpayerFormData(taxpayerInfo);
-        }
-    }, [taxpayerInfo]);
-
-    const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> ) => {
         const { name, value } = e.target;
-        // this if/else statement is used to handle nested address object
+        const updateTaxpayerInfo = { ...taxpayerInfo, [name]: value };
+        // this if/else statement is used to handle nested address
         if (name.startsWith('address.')) {
             const addressKey = name.split('.')[1];
-            setTaxpayerFormData(prevState => ({
-                ...prevState,
-                address: {
-                    ...prevState.address,
-                    [addressKey]: value
-                }
-            }));
-        } else {
-            // hanbdle all other form fields
-            setTaxpayerFormData(prevState => ({
-                ...prevState,
-                [name]: value
-            }));
+            updateTaxpayerInfo.address = { ...taxpayerInfo.address, [addressKey]: value };
         }
+        dispatch(setTaxpayerInfo(updateTaxpayerInfo));
     };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         // need to serialize address object to JSON string before sending to API
         const payload = {
-            ...taxpayerFormData,
-            address: JSON.stringify(taxpayerFormData.address)
+            ...taxpayerInfo,
+            address: JSON.stringify(taxpayerInfo.address)
         };
 
-        if (taxpayerFormData.userId) {
+        if (taxpayerInfo.userId) {
             updateTaxpayerInfo(payload)
                 .then((res: any) => console.log(res))
                 .catch((err: any) => console.error('Failed updating taxpayer info:', err));
@@ -111,7 +54,7 @@ function TaxpayerInfoForm () {
             createTaxpayerInfo(payload)
                 .then((res: { data: { userId: any; }; }) => {
                     console.log(res)
-                    setTaxpayerFormData({ ...taxpayerFormData, userId: res.data.userId });
+                    dispatch(setTaxpayerInfo({ ...taxpayerInfo, userId: res.data.userId }));
                 })
                 .catch((err: any) => console.error('Failed creating taxpayer info:', err));
         }
@@ -125,7 +68,7 @@ function TaxpayerInfoForm () {
                     id="firstName"
                     name="firstName"
                     type="text"
-                    value={taxpayerFormData.firstName}
+                    value={taxpayerInfo.firstName}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -135,17 +78,17 @@ function TaxpayerInfoForm () {
                     id="middleName"
                     name="middleName"
                     type="text"
-                    value={taxpayerFormData.middleName}
+                    value={taxpayerInfo.middleName}
                     onChange={handleChange}
                 />
             </FormGroup>
             <FormGroup>
                 <Label htmlFor="lastName">Last Name</Label>
                 <TextInput
-                    id="LastName"
+                    id="lastName"
                     name="lastName"
                     type="text"
-                    value={taxpayerFormData.lastName}
+                    value={taxpayerInfo.lastName}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -155,7 +98,7 @@ function TaxpayerInfoForm () {
                     id="occupation"
                     name="occupation"
                     type="text"
-                    value={taxpayerFormData.occupation}
+                    value={taxpayerInfo.occupation}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -165,7 +108,7 @@ function TaxpayerInfoForm () {
                     id='ssn'
                     name='ssn'
                     type='text'
-                    value={taxpayerFormData.ssn}
+                    value={taxpayerInfo.ssn}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -176,7 +119,7 @@ function TaxpayerInfoForm () {
                     name="dob"
                     type="date"
                     className="usa-input"
-                    value={taxpayerFormData.dob}
+                    value={taxpayerInfo.dob}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -186,7 +129,7 @@ function TaxpayerInfoForm () {
                     id="phoneNumber"
                     name="phoneNumber"
                     type="text"
-                    value={taxpayerFormData.phoneNumber}
+                    value={taxpayerInfo.phoneNumber}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -196,7 +139,7 @@ function TaxpayerInfoForm () {
                     id="street"
                     name="address.street"
                     type="text"
-                    value={taxpayerFormData.address.street}
+                    value={taxpayerInfo.address.street}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -206,7 +149,7 @@ function TaxpayerInfoForm () {
                     id="city"
                     name="address.city"
                     type="text"
-                    value={taxpayerFormData.address.city}
+                    value={taxpayerInfo.address.city}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -216,7 +159,7 @@ function TaxpayerInfoForm () {
                     id="state"
                     name="address.state"
                     type="text"
-                    value={taxpayerFormData.address.state}
+                    value={taxpayerInfo.address.state}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -226,11 +169,89 @@ function TaxpayerInfoForm () {
                     id="zip"
                     name="address.zip"
                     type="text"
-                    value={taxpayerFormData.address.zip}
+                    value={taxpayerInfo.address.zip}
                     onChange={handleChange}
                 />
             </FormGroup>
-            <Button type="submit">Submit</Button>
+            {/* <Fieldset legend="Name" legendStyle="large">
+                <Label htmlFor="first-name">First or given name</Label>
+                <span className="usa-hint">For example, Jose, Darren, or Mai</span>
+                <TextInput id="first-name" name="first-name" type="text" value={taxpayerInfo.firstName} onChange={handleChange}/>
+
+                <Label htmlFor="middle-name">Middle name</Label>
+                <TextInput id="middle-name" name="middle-name" type="text" value={taxpayerInfo.middleName} onChange={handleChange} />
+
+                <Label htmlFor="last-name">Last or family name</Label>
+                <span className="usa-hint">
+                    For example, Martinez Gonzalez, Gu, or Smith
+                </span>
+                <TextInput id="last-name" name="last-name" type="text" value={taxpayerInfo.lastName}onChange={handleChange}/>
+
+                <Label htmlFor="occupation">Occupation</Label>
+                <TextInput id="occupation" name="occupation" type="text" value={taxpayerInfo.occupation} onChange={handleChange} />
+
+                <Label htmlFor="ssn">Social Security Number</Label>
+                <TextInput id="ssn" name="ssn" type="text" value={taxpayerInfo.ssn} onChange={handleChange} />
+
+                <Label htmlFor="dob">Date of Birth</Label>
+                <input
+                    id="dob"
+                    name="dob"
+                    type="date"
+                    className="usa-input"
+                    value={taxpayerInfo.dob}
+                    onChange={handleChange}
+                />
+
+                <Label htmlFor="phoneNumber">Phone Number</Label>
+                <TextInput
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    type="text"
+                    value={taxpayerInfo.phoneNumber}
+                    onChange={handleChange}
+                />
+
+            </Fieldset>
+
+            <Fieldset legend="Address" legendStyle="large">
+
+                <Label htmlFor="street">Street</Label>
+                <TextInput
+                    id="street"
+                    name="address.street"
+                    type="text"
+                    value={taxpayerInfo.address.street}
+                    onChange={handleChange}
+                />
+
+                <Label htmlFor="city">
+                    City
+                </Label>
+
+                <TextInput
+                    id="city"
+                    name="address.city"
+                    type="text"
+                    value={taxpayerInfo.address.city}
+                    onChange={handleChange}
+                />
+
+                <Label htmlFor="state">State</Label>
+                <TextInput
+                    id="state"
+                    name="address.state"
+                    type="text"
+                    value={taxpayerInfo.address.state}
+                    onChange={handleChange}
+                />
+
+                <Label htmlFor="zip">ZIP Code</Label>
+                <TextInput id="zip" name="zip" type="text" inputSize="medium" pattern="[\d]{5}(-[\d]{4})?" value={taxpayerInfo.address.zip} onChange={handleChange}/>
+
+            </Fieldset> */}
+
+            <Button type="submit">Save and Continue</Button>
         </Form>
     );
 

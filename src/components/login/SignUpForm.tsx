@@ -1,11 +1,9 @@
 import { FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { signUp } from '../../api/authApi';
-import { Alert, Button, Checkbox, Fieldset, Form, GovBanner, Grid, GridContainer, Header, Label, Link, MediaBlockBody, TextInput, Title } from "@trussworks/react-uswds";
+import { Alert, Button, Fieldset, Form, GovBanner, Grid, GridContainer, Header, Label, Link, MediaBlockBody, TextInput, Title } from "@trussworks/react-uswds";
 
 function SignUpForm() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,7 +16,6 @@ function SignUpForm() {
 
         if (password !== confirmPassword) {
             setError('Passwords do not match');
-
             return;
         }
 
@@ -151,22 +148,6 @@ function SignUpForm() {
                           </div>)}
                       </div>
                     </section>
-                  </div>
-
-                  <div className="border-top border-base-lighter margin-top-3 padding-top-1">
-                    <h2>Are you a federal employee?</h2>
-                    <div className="usa-prose">
-                      <p>
-                        If you are a federal employee or [other secondary user],
-                        please use [secondary Single Sign On (SSO)].
-                      </p>
-
-                      <p>
-                        <Button type="button" outline={true}>
-                          Launch secondary SSO
-                        </Button>
-                      </p>
-                    </div>
                   </div>
                 </div>
               </Grid>

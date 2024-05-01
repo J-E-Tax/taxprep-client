@@ -35,7 +35,7 @@ const authSlice = createSlice({
             state.token = action.payload; // this payload is JWT token
             state.loading = false;
             // localStorage.setItem('token', action.payload);
-            cookies.set('token', action.payload, { path: '/', maxAge: 86400 });// set the token in the cookie 86400 = 1 DAY
+            // cookies.set('token', action.payload, { path: '/', maxAge: 86400 });// set the token in the cookie 86400 = 1 DAY
         },
         loginFail: (state, action) => {
             state.error = action.payload;

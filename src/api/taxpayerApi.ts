@@ -10,7 +10,7 @@ interface TaxpayerInfo {
     dob: string,
     phoneNumber: string,
     address: string
-};
+}
 
 export const getTaxpayerInfo = (userId: number) => {
     return apiClient.get(`/taxpayer-info/${userId}`);

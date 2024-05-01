@@ -1,0 +1,46 @@
+.main-stepper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    min-height: 100vh;
+    background-color: #f1f1f1;
+  }
+
+  .main-stepper ul {
+    width: 100%;
+    max-width: 600px;
+    align-items: stretch;
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .main-stepper li {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-left: 5px solid #005ea2;
+    padding-left: 1rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .main-stepper li.active {
+    border-left-color: #004b95;
+  }
+
+  .main-stepper h4 {
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: #005ea2;
+    margin-bottom: 0.5rem;
+  }
+
+  .main-stepper div {
+    color: #333;
+    margin-bottom: 1rem;
+  }
+
+  .main-stepper button {
+    background-color: #0071bc;
+    color: white;
+  }

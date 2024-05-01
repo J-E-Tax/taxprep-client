@@ -86,7 +86,7 @@ function LandingMain() {
                 <p>
                 E-File directly to the IRS. Our calculations are 100% accurate, guaranteed.
                 </p>
-                <a className="usa-button" href="/login">
+                <a className="usa-button" href="/multiplelogin">
                   Get Started
                 </a>
               </div>

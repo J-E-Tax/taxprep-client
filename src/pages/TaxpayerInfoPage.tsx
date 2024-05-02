@@ -1,12 +1,14 @@
 
 import TaxpayerInfoForm from '../components/taxpayerInfo/TaxpayerInfoForm';
+import './pageStyle.css';
 
 function TaxpayerInfoPage() {
 
     return (
-        <div>
-            <h2>Tell us about yourself</h2>
-            <TaxpayerInfoForm />
+        <div className="bg-base-lightest">
+            <div className="page-container">
+                <TaxpayerInfoForm />
+            </div>
         </div>
     );
 

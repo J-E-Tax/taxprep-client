@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
-import { Button, Form, TextInput, FormGroup, Label, Textarea, Fieldset, DatePicker, Select, RequiredMarker } from '@trussworks/react-uswds';
+import { ChangeEvent, FormEvent, useEffect } from 'react';
+import { Button, Form, TextInput, FormGroup, Label, GridContainer, Grid } from '@trussworks/react-uswds';
 import { createTaxpayerInfo, updateTaxpayerInfo } from '../../api/taxpayerApi';
 import { getTaxpayerInfo } from '../../api/taxpayerApi';
 import { setTaxpayerInfo } from '../../features/taxpayerInfo/taxpayerInfoSlice';
@@ -60,199 +60,167 @@ function TaxpayerInfoForm () {
         }
     };
 
-    return (
-        <Form onSubmit={handleSubmit}>
-            <FormGroup>
-                <Label htmlFor="firstName">First Name</Label>
-                <TextInput
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    value={taxpayerInfo.firstName}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="middleName">Middle Name</Label>
-                <TextInput
-                    id="middleName"
-                    name="middleName"
-                    type="text"
-                    value={taxpayerInfo.middleName}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="lastName">Last Name</Label>
-                <TextInput
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    value={taxpayerInfo.lastName}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="occupation">Occupation</Label>
-                <TextInput
-                    id="occupation"
-                    name="occupation"
-                    type="text"
-                    value={taxpayerInfo.occupation}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="ssn">SSN</Label>
-                <TextInput
-                    id='ssn'
-                    name='ssn'
-                    type='text'
-                    value={taxpayerInfo.ssn}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="dob">Date of Birth</Label>
-                <input
-                    id="dob"
-                    name="dob"
-                    type="date"
-                    className="usa-input"
-                    value={taxpayerInfo.dob}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="phoneNumber">Phone Number</Label>
-                <TextInput
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    type="text"
-                    value={taxpayerInfo.phoneNumber}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="street">Street</Label>
-                <TextInput
-                    id="street"
-                    name="address.street"
-                    type="text"
-                    value={taxpayerInfo.address.street}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="city">City</Label>
-                <TextInput
-                    id="city"
-                    name="address.city"
-                    type="text"
-                    value={taxpayerInfo.address.city}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="state">State</Label>
-                <TextInput
-                    id="state"
-                    name="address.state"
-                    type="text"
-                    value={taxpayerInfo.address.state}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            <FormGroup>
-                <Label htmlFor="zip">ZIP Code</Label>
-                <TextInput
-                    id="zip"
-                    name="address.zip"
-                    type="text"
-                    value={taxpayerInfo.address.zip}
-                    onChange={handleChange}
-                />
-            </FormGroup>
-            {/* <Fieldset legend="Name" legendStyle="large">
-                <Label htmlFor="first-name">First or given name</Label>
-                <span className="usa-hint">For example, Jose, Darren, or Mai</span>
-                <TextInput id="first-name" name="first-name" type="text" value={taxpayerInfo.firstName} onChange={handleChange}/>
+    return   (
+        <div className="bg-base-lightest">
+        <GridContainer className="usa-section">
+            <Grid row className="margin-x-neg-05 flex-justify-center">
+                <div className="bg-white padding-y-3 padding-x-15 border border-base-lighter">
+                    <h2>Tell us about yourself</h2>
+                    <Form onSubmit={handleSubmit} className="usa-form usa-form--large margin-bottom-3">
+                        <Grid row gap>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="firstName">First or given name</Label>
+                                    <TextInput
+                                        id="firstName"
+                                        name="firstName"
+                                        type="text"
+                                        value={taxpayerInfo.firstName}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="middleName">Middle Name</Label>
+                                    <TextInput
+                                        id="middleName"
+                                        name="middleName"
+                                        type="text"
+                                        value={taxpayerInfo.middleName}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                        </Grid>
 
-                <Label htmlFor="middle-name">Middle name</Label>
-                <TextInput id="middle-name" name="middle-name" type="text" value={taxpayerInfo.middleName} onChange={handleChange} />
+                        <Grid row gap>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="lastName">Last or family name</Label>
+                                    <TextInput
+                                        id="lastName"
+                                        name="lastName"
+                                        type="text"
+                                        value={taxpayerInfo.lastName}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="occupation">Occupation</Label>
+                                    <TextInput
+                                        id="occupation"
+                                        name="occupation"
+                                        type="text"
+                                        value={taxpayerInfo.occupation}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                        </Grid>
 
-                <Label htmlFor="last-name">Last or family name</Label>
-                <span className="usa-hint">
-                    For example, Martinez Gonzalez, Gu, or Smith
-                </span>
-                <TextInput id="last-name" name="last-name" type="text" value={taxpayerInfo.lastName}onChange={handleChange}/>
+                        <Grid row gap>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="ssn">Social Security Number</Label>
+                                    <TextInput
+                                        id='ssn'
+                                        name='ssn'
+                                        type='text'
+                                        value={taxpayerInfo.ssn}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="dob">Date of Birth</Label>
+                                    <input
+                                        id="dob"
+                                        name="dob"
+                                        type="date"
+                                        className="usa-input"
+                                        value={taxpayerInfo.dob}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                        </Grid>
 
-                <Label htmlFor="occupation">Occupation</Label>
-                <TextInput id="occupation" name="occupation" type="text" value={taxpayerInfo.occupation} onChange={handleChange} />
+                        <Grid row gap>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="phoneNumber">Phone Number</Label>
+                                    <TextInput
+                                        id="phoneNumber"
+                                        name="phoneNumber"
+                                        type="text"
+                                        value={taxpayerInfo.phoneNumber}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="street">Street</Label>
+                                    <TextInput
+                                        id="street"
+                                        name="address.street"
+                                        type="text"
+                                        value={taxpayerInfo.address.street}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                        </Grid>
 
-                <Label htmlFor="ssn">Social Security Number</Label>
-                <TextInput id="ssn" name="ssn" type="text" value={taxpayerInfo.ssn} onChange={handleChange} />
+                        <Grid row gap>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="city">City</Label>
+                                    <TextInput
+                                        id="city"
+                                        name="address.city"
+                                        type="text"
+                                        value={taxpayerInfo.address.city}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                            <Grid col={6}>
+                                <FormGroup>
+                                    <Label htmlFor="state">State</Label>
+                                    <TextInput
+                                        id="state"
+                                        name="address.state"
+                                        type="text"
+                                        value={taxpayerInfo.address.state}
+                                        onChange={handleChange}
+                                    />
+                                </FormGroup>
+                            </Grid>
+                        </Grid>
 
-                <Label htmlFor="dob">Date of Birth</Label>
-                <input
-                    id="dob"
-                    name="dob"
-                    type="date"
-                    className="usa-input"
-                    value={taxpayerInfo.dob}
-                    onChange={handleChange}
-                />
+                        <FormGroup>
+                            <Label htmlFor="zip">ZIP Code</Label>
+                            <TextInput
+                                id="zip"
+                                name="address.zip"
+                                type="text"
+                                inputSize="medium"
+                                value={taxpayerInfo.address.zip}
+                                onChange={handleChange}
+                            />
+                        </FormGroup>
 
-                <Label htmlFor="phoneNumber">Phone Number</Label>
-                <TextInput
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    type="text"
-                    value={taxpayerInfo.phoneNumber}
-                    onChange={handleChange}
-                />
-
-            </Fieldset>
-
-            <Fieldset legend="Address" legendStyle="large">
-
-                <Label htmlFor="street">Street</Label>
-                <TextInput
-                    id="street"
-                    name="address.street"
-                    type="text"
-                    value={taxpayerInfo.address.street}
-                    onChange={handleChange}
-                />
-
-                <Label htmlFor="city">
-                    City
-                </Label>
-
-                <TextInput
-                    id="city"
-                    name="address.city"
-                    type="text"
-                    value={taxpayerInfo.address.city}
-                    onChange={handleChange}
-                />
-
-                <Label htmlFor="state">State</Label>
-                <TextInput
-                    id="state"
-                    name="address.state"
-                    type="text"
-                    value={taxpayerInfo.address.state}
-                    onChange={handleChange}
-                />
-
-                <Label htmlFor="zip">ZIP Code</Label>
-                <TextInput id="zip" name="zip" type="text" inputSize="medium" pattern="[\d]{5}(-[\d]{4})?" value={taxpayerInfo.address.zip} onChange={handleChange}/>
-
-            </Fieldset> */}
-
-            <Button type="submit">Save and Continue</Button>
-        </Form>
+                        <Button type="submit">Save and Continue</Button>
+                    </Form>
+                </div>
+            </Grid>
+        </GridContainer>
+    </div>
     );
 
 }

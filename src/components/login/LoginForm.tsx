@@ -2,14 +2,13 @@ import {  FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/authApi';
-import { loginStart, loginSuccess, loginFail, logout } from '../../features/auth/authSlice';
+import { loginStart, loginSuccess, loginFail } from '../../features/auth/authSlice';
 
-import { Button, Form, TextInput, FormGroup, Label, GovBanner, Header, Title, GridContainer, Grid, Fieldset, Link, Footer, Identifier, IdentifierMasthead, IdentifierLogos, IdentifierLogo, IdentifierIdentity, IdentifierLinks } from '@trussworks/react-uswds';
-
+import { Button, Form, TextInput, Label, GovBanner, Header, Title, GridContainer, Grid, Fieldset, Link } from '@trussworks/react-uswds';
 
 function LoginForm() {
-
     const dispatch = useDispatch();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -23,7 +22,7 @@ function LoginForm() {
             .then((res) => {
                 console.log(res);
                 dispatch(loginSuccess(res.data));
-                navigate('/taxpayer-info');
+                navigate('/main');
             })
             .catch((err) => {
                 console.error(err);
@@ -31,9 +30,11 @@ function LoginForm() {
             });
     };
 
-    // const handleGoogleOAuthLogin = () => {
-    //     window.location.href = `${import.meta.env.VITE_REACT_URL}/oauth2/authorization/google`;
-    // };
+    const handleGoogleOAuthLogin = () => {
+        window.location.replace(`${import.meta.env.VITE_REACT_URL}/oauth2Signin`);
+
+        console.log("We signed in!");
+    };
 
     return (
         <>
@@ -98,7 +99,7 @@ function LoginForm() {
                       please use [secondary Single Sign On (SSO)].
                     </p>
                     <p>
-                      <Button type="button" outline={true} >
+                      <Button type="button" outline={true} onClick={handleGoogleOAuthLogin} >
                         Sign in with Google
                       </Button>
                     </p>

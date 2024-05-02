@@ -5,28 +5,29 @@ import { Button, Form, TextInput, FormGroup, Label, Textarea, Fieldset, DatePick
 import { createTaxForm, updateTaxForm } from '../../api/taxformApi';
 import { getTaxFormInfo } from '../../api/taxformApi';
 import { RootState } from '../../app/store';
-import { setTaxFormInfo } from '../../features/taxforminfo/taxformInfoSlice';
+import { setTaxFormInfo, TaxFormInfoState } from '../../features/taxforminfo/taxformInfoSlice';
 
 
 function TaxFormInfoForm () {
     const dispatch = useDispatch();
-
     const {formID} = useParams();
     //console.log("before If Statement", formID)
 
-    if(formID != undefined){
-        //console.log("Entered If Statement")
-        useEffect(() => {
-        getTaxFormInfo(parseInt(formID, 10))
-        .then((res) => {
-            dispatch(setTaxFormInfo({
-                ...res.data,
-                formDetails: res.data.formDetails ? JSON.parse(res.data.formDetails) : ""}));
-        })
-                .catch((err: any) => console.error('Failed updating tax form:', err));
     
-    }, [dispatch, formID]);
-}
+    //console.log("Entered If Statement")
+    useEffect(() => {
+        if(formID != undefined){
+            getTaxFormInfo(parseInt(formID, 10))
+            .then((res) => {
+                dispatch(setTaxFormInfo({
+                    ...res.data,
+                    formDetails: res.data.formDetails ? JSON.parse(res.data.formDetails) : ""}));
+            })
+                    .catch((err: any) => console.error('Failed updating tax form:', err));
+
+        } 
+    },[dispatch, formID]);
+
 
     
 
@@ -39,14 +40,21 @@ function TaxFormInfoForm () {
     }, [taxformInfo]);
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> ) => {
+        e.preventDefault();
         const { name, value } = e.target;
-        const updateTaxForm = { ...taxformInfo, [name]: value };
+
+        console.log("Inside Handle CHange")
+        //const updateTaxForm = { ...taxformInfo, [name]: value };
         // this if/else statement is used to handle nested address
-        if (name.startsWith('formDetails.')) {
-            const formKey = name.split('.')[1];
-            updateTaxForm.formDetails = { ...taxformInfo.formDetails, [formKey]: value };
-        }
-        dispatch(setTaxFormInfo(updateTaxForm));
+        const updatedTaxFormInfo: TaxFormInfoState = {
+            ...taxformInfo,
+            [name]: value,
+            // Handle nested formDetails
+            ...(name.startsWith('formDetails.')
+              ? { formDetails: { ...taxformInfo.formDetails, [name.split('.')[1]]: value } }
+              : {}),
+          };
+        dispatch(setTaxFormInfo(updatedTaxFormInfo));
     };
 
     const handleSubmit = (e: FormEvent) => {
@@ -70,47 +78,106 @@ function TaxFormInfoForm () {
                 .catch((err: any) => console.error('Failed creating tax form', err));
         }
     };
-    return (
-        <>
-        <StepIndicator
-            headingLevel="h4"
-            ofText="of"
-            stepText="Step"
-        >
-        <StepIndicatorStep
-            label="Personal information"
-            status="complete"
-        />
-        <StepIndicatorStep
-            label="Household status"
-            status="complete"
-        />
-        <StepIndicatorStep
-            label="Supporting documents"
-            status="current"
-        />
-        <StepIndicatorStep label="Signature" />
-        <StepIndicatorStep label="Review and submit" />
+    const [steps, setSteps] = useState<Step[]>([
+        { label: 'Personal information'},
+        { label: 'Household status'},
+        { label: 'Supporting documents'},
+        { label: 'Signature' },
+        { label: 'Review and submit' },
+      ]);
+    const [currentStep, setCurrentStep] = useState<number>(0); 
+    const MyStepIndicatorComponent: React.FC = () => {
 
-        </StepIndicator>
-        <Form onSubmit={handleSubmit}>
-            <FormGroup>
-                <Label htmlFor="userID">UserID</Label>
-                <TextInput
-                    id="user_id"
-                    name="user"
-                    type="text"
-                    defaultValue={taxformInfo.user}
-                    onChange={handleChange}
+        
+
+        //console.log(currentStep)
+
+        
+
+        //   const updateStepStatus = (stepIndex: number, newStatus: 'complete' | 'current' | undefined) => {
+        //     setSteps((prevSteps) => {
+        //       const updatedSteps = [...prevSteps];
+        //       if (stepIndex >= 0 && stepIndex < updatedSteps.length) {
+        //         updatedSteps[stepIndex] = { ...updatedSteps[stepIndex], status: newStatus };
+        
+                
+        //       }
+        //       return updatedSteps;
+        //     });
+        //   };
+      
+          const handleNextStep = () => {
+            if (currentStep < steps.length - 1) {
+              const updatedSteps = [...steps];
+              updatedSteps[currentStep].status = 'complete'; // Mark current step as complete
+              updatedSteps[currentStep + 1].status = 'current'; // Mark next step as current
+              setSteps(updatedSteps);
+              setCurrentStep((prevStep) => prevStep + 1);
+            //   console.log("/////////////////////")
+            //   console.log("Handle Updated Next Steps")
+            //   console.log(updatedSteps[currentStep].status)
+            //   console.log("/////////////////////")
+            }
+          };
+        
+        
+          const handlePreviousStep = () => {
+            if (currentStep > 0) {
+              const updatedSteps = [...steps];
+              updatedSteps[currentStep].status = undefined; // Remove current step status
+              updatedSteps[currentStep - 1].status = 'current'; // Mark previous step as current
+              setSteps(updatedSteps);
+              setCurrentStep((prevStep) => prevStep - 1);
+            }
+          };
+        //   console.log("/////////////////////")
+        //   console.log("Handle Previous Steps")
+        //   console.log(steps[currentStep].status)
+        //   console.log("/////////////////////")
+
+        return (
+          <div>
+            <StepIndicator headingLevel="h4" ofText="of" stepText="Step">
+                {steps.map((step, index) => (
+                <StepIndicatorStep
+                    key={index}
+                    label={step.label}
+                    status={step.status}
                 />
-            </FormGroup>
+                ))}
+            </StepIndicator>
+      
+            {/* Render navigation buttons */}
+            
+              <Button type='button' onClick={handlePreviousStep} disabled={currentStep === 0}>
+                Previous
+              </Button>
+              <Button type='button' onClick={handleNextStep} disabled={currentStep === steps.length - 1}>
+                Next
+              </Button>
+      
+            {/* Render current step content based on currentStep state */}
+              {/* You can conditionally render content for each step */}
+              {currentStep === 0 && <PersonalInfoStep />}
+              {currentStep === 1 && <HouseholdStatusStep />}
+              {currentStep === 2 && <SupportingDocumentsStep />}
+              {currentStep === 3 && <SignatureStep />}
+              {currentStep === 4 && <ReviewAndSubmitStep />}
+          </div>
+        );
+      };
+    
+      const PersonalInfoStep: React.FC = () => {
+        //console.log("Displaying First Step")
+        
+        return <Form onSubmit={handleSubmit}>
             <FormGroup>
                 <Label htmlFor="Status">Status</Label>
                 <TextInput
                     id="status"
                     name="status"
                     type="text"
-                    defaultValue={taxformInfo.status}
+                    value={taxformInfo.status}
                     onChange={handleChange}
                 />
             </FormGroup>
@@ -144,6 +211,13 @@ function TaxFormInfoForm () {
                     onChange={handleChange}
                 />
             </FormGroup>
+            <Button type="submit">Save and Continue</Button>
+        </Form>;
+      };
+    
+      const HouseholdStatusStep: React.FC = () => {
+        return <Form onSubmit={handleSubmit}>
+
             <FormGroup>
                 <Label htmlFor="eaddress">Employer's name, address, and ZIP</Label>
                 <input
@@ -197,8 +271,65 @@ function TaxFormInfoForm () {
             </FormGroup>
             <Button type="submit">Save and Continue</Button>
         </Form>
+      };
+    
+      const SupportingDocumentsStep: React.FC = () => {
+        return <div>Supporting documents form goes here</div>;
+      };
+    
+      const SignatureStep: React.FC = () => {
+        return <div>Signature form goes here</div>;
+      };
+    
+      const ReviewAndSubmitStep: React.FC = () => {
+        return <div>Review and submit form goes here</div>;
+      };
+    return (
+        <>
+        {/* <StepIndicator
+            headingLevel="h4"
+            ofText="of"
+            stepText="Step"
+        >
+        <StepIndicatorStep
+            label="Personal information"
+            status="complete"
+        />
+        <StepIndicatorStep
+            label="Household status"
+            status="complete"
+        />
+        <StepIndicatorStep
+            label="Supporting documents"
+            status="current"
+            
+        />
+        <StepIndicatorStep label="Signature" />
+        <StepIndicatorStep label="Review and submit" />
+
+        </StepIndicator> */}
+        <MyStepIndicatorComponent />
+        {/* <Form onSubmit={handleSubmit}>
+            
+            
+            
+            
+            
+            
+            
+            
+        </Form> */}
         </>
     )
 }
 
+interface Step {
+    label: string;
+    status?: 'complete' | 'current';
+  }
+  
+
+
+  
+  
 export default TaxFormInfoForm;

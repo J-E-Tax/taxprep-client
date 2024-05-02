@@ -1,9 +1,10 @@
 import '../node_modules/@trussworks/react-uswds/lib/uswds.css';
 import { useEffect } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, useParams  } from 'react-router-dom'
 import { initializeAuth } from './features/auth/authSlice'
 import { useDispatch } from 'react-redux'
 import TaxpayerInfoPage from './pages/TaxpayerInfoPage'
+import TaxFormInfoPage from './pages/TaxformPage'
 import LoginPage from './pages/LoginPage'
 import NavBar from './utils/NavBar'
 import SignUpPage from './pages/SignUpPage'
@@ -14,11 +15,12 @@ import MultipleLoginPage from './pages/MultipleLogin';
 // import './App.css'
 
 function App() {
+  const {formID} = useParams();
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(initializeAuth());
-}, [dispatch]);
+//   const dispatch = useDispatch();
+//   useEffect(() => {
+//     dispatch(initializeAuth());
+// }, [dispatch]);
 
   return (
     <Router>
@@ -30,6 +32,8 @@ function App() {
         <Route path="/multipleLogin" element={<MultipleLoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signUp" element={<SignUpPage />} />
+        <Route path="/taxes/:formID" element={<TaxFormInfoPage />} />
+        <Route path="/taxes" element={<TaxFormInfoPage />} />
         <Route path="/results" element={<ResultsPage />} />
       </Routes>
     </Router>

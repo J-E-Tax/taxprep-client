@@ -1,7 +1,7 @@
-import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { ChangeEvent, FormEvent, useState, useEffect, FocusEvent} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { Button, Form, TextInput, FormGroup, Label, Textarea, Fieldset, DatePicker, Select, RequiredMarker, StepIndicator, StepIndicatorStep } from '@trussworks/react-uswds';
+import { Button, Form, TextInput, FormGroup, Label, Textarea, Fieldset, DatePicker, Select, RequiredMarker, StepIndicator, StepIndicatorStep, CardGroup, CardHeader, CardBody, CardFooter, Card   } from '@trussworks/react-uswds';
 import { createTaxForm, updateTaxForm } from '../../api/taxformApi';
 import { getTaxFormInfo } from '../../api/taxformApi';
 import { RootState } from '../../app/store';
@@ -39,6 +39,8 @@ function TaxFormInfoForm () {
         console.log("TaxformInfo from Redux:", taxformInfo);
     }, [taxformInfo]);
 
+     let updateTaxForm1: TaxFormInfoState = {...taxformInfo};
+
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> ) => {
         e.preventDefault();
         const { name, value } = e.target;
@@ -54,9 +56,33 @@ function TaxFormInfoForm () {
               ? { formDetails: { ...taxformInfo.formDetails, [name.split('.')[1]]: value } }
               : {}),
           };
-        dispatch(setTaxFormInfo(updatedTaxFormInfo));
+        updateTaxForm1 = updatedTaxFormInfo;
+        console.log(updateTaxForm1);
+        console.log(updatedTaxFormInfo);
     };
 
+    const handleBlur = (e: FocusEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        const { name, value } = e.target;
+
+        e.preventDefault();
+
+        console.log("Inside Handle CHange")
+        //const updateTaxForm = { ...taxformInfo, [name]: value };
+        // this if/else statement is used to handle nested address
+        const updatedTaxFormInfo: TaxFormInfoState = {
+            ...taxformInfo,
+            [name]: value,
+            // Handle nested formDetails
+            ...(name.startsWith('formDetails.')
+              ? { formDetails: { ...taxformInfo.formDetails, [name.split('.')[1]]: value } }
+              : {}),
+          };
+        updateTaxForm1 = updatedTaxFormInfo;
+        console.log(updateTaxForm1);
+        console.log(updatedTaxFormInfo);
+        dispatch(setTaxFormInfo(updateTaxForm1));
+
+    };
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         // need to serialize address object to JSON string before sending to API
@@ -106,30 +132,37 @@ function TaxFormInfoForm () {
         //     });
         //   };
       
-          const handleNextStep = () => {
-            if (currentStep < steps.length - 1) {
-              const updatedSteps = [...steps];
-              updatedSteps[currentStep].status = 'complete'; // Mark current step as complete
-              updatedSteps[currentStep + 1].status = 'current'; // Mark next step as current
-              setSteps(updatedSteps);
-              setCurrentStep((prevStep) => prevStep + 1);
-            //   console.log("/////////////////////")
-            //   console.log("Handle Updated Next Steps")
-            //   console.log(updatedSteps[currentStep].status)
-            //   console.log("/////////////////////")
-            }
-          };
+        const handleNextStep = () => {
+        if (currentStep < steps.length - 1) {
+            const updatedSteps = [...steps];
+            updatedSteps[currentStep].status = 'complete'; // Mark current step as complete
+            updatedSteps[currentStep + 1].status = 'current'; // Mark next step as current
+            setSteps(updatedSteps);
+            setCurrentStep((prevStep) => prevStep + 1);
+        //   console.log("/////////////////////")
+        //   console.log("Handle Updated Next Steps")
+        //   console.log(updatedSteps[currentStep].status)
+        //   console.log("/////////////////////")
+        //dispatch(setTaxFormInfo(updateTaxForm1));
+
+        }
+
+        };
+    
+    
+        const handlePreviousStep = () => {
+        if (currentStep > 0) {
+            const updatedSteps = [...steps];
+            updatedSteps[currentStep].status = undefined; // Remove current step status
+            updatedSteps[currentStep - 1].status = 'current'; // Mark previous step as current
+            setSteps(updatedSteps);
+            setCurrentStep((prevStep) => prevStep - 1);
+        }
+        //dispatch(setTaxFormInfo(updateTaxForm1));
+
+        };
+
         
-        
-          const handlePreviousStep = () => {
-            if (currentStep > 0) {
-              const updatedSteps = [...steps];
-              updatedSteps[currentStep].status = undefined; // Remove current step status
-              updatedSteps[currentStep - 1].status = 'current'; // Mark previous step as current
-              setSteps(updatedSteps);
-              setCurrentStep((prevStep) => prevStep - 1);
-            }
-          };
         //   console.log("/////////////////////")
         //   console.log("Handle Previous Steps")
         //   console.log(steps[currentStep].status)
@@ -178,7 +211,7 @@ function TaxFormInfoForm () {
                     name="status"
                     type="text"
                     value={taxformInfo.status}
-                    onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <FormGroup>
@@ -188,7 +221,8 @@ function TaxFormInfoForm () {
                     name="formType"
                     type="text"
                     defaultValue={taxformInfo.formType}
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <FormGroup>
@@ -198,7 +232,8 @@ function TaxFormInfoForm () {
                     name="formDetails.a"
                     type="text"
                     defaultValue={taxformInfo.formDetails.a}
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <FormGroup>
@@ -208,7 +243,8 @@ function TaxFormInfoForm () {
                     name='formDetails.b'
                     type='text'
                     defaultValue={taxformInfo.formDetails.b}
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <Button type="submit">Save and Continue</Button>
@@ -226,7 +262,8 @@ function TaxFormInfoForm () {
                     type="text"
                     //className="text"
                     defaultValue={taxformInfo.formDetails.c}
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <FormGroup>
@@ -236,7 +273,8 @@ function TaxFormInfoForm () {
                     name="formDetails.d"
                     type="text"
                     defaultValue={taxformInfo.formDetails.d}
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <FormGroup>
@@ -246,7 +284,8 @@ function TaxFormInfoForm () {
                     name="formDetails.e"
                     type="text"
                     defaultValue={taxformInfo.formDetails.e}
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <FormGroup>
@@ -256,7 +295,8 @@ function TaxFormInfoForm () {
                     name="formDetails.f"
                     type="text"
                     defaultValue={taxformInfo.formDetails.f}
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <FormGroup>
@@ -266,7 +306,8 @@ function TaxFormInfoForm () {
                     name="formDetails.l1"
                     type="text"
                     defaultValue={taxformInfo.formDetails.l1}
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             </FormGroup>
             <Button type="submit">Save and Continue</Button>
@@ -282,7 +323,48 @@ function TaxFormInfoForm () {
       };
     
       const ReviewAndSubmitStep: React.FC = () => {
-        return <div>Review and submit form goes here</div>;
+        const goToStep = (stepIndex: number) => {
+            if (stepIndex >= 0 && stepIndex < steps.length && stepIndex !== currentStep) {
+                const updatedSteps: Step[] = steps.map((step, index) => ({
+                ...step,
+                status: index === stepIndex ? 'current' : index < stepIndex ? 'complete' : undefined,
+                }));
+        
+                setSteps(updatedSteps);
+                setCurrentStep(stepIndex);
+            }
+            };
+
+        return <>
+            <CardGroup>
+                <Card>
+                    <CardHeader>
+                        <h2>Personal Information</h2>
+                    </CardHeader>
+
+                    <CardBody>
+                        <p>Name: {taxformInfo.formDetails.e}</p>
+
+                    </CardBody>
+                    <CardFooter>
+                        <Button type='button' onClick={() => goToStep(0)}>Edit</Button>
+                    </CardFooter>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <h2>Financial Input</h2>
+                    </CardHeader>
+
+                    <CardBody>
+                        <p>Total Earnings: {taxformInfo.formDetails.l1}</p>
+                    </CardBody>
+                    <CardFooter>
+                        <Button type='button' onClick={() => goToStep(1)}>Edit</Button>
+                    </CardFooter>
+                </Card>
+            </CardGroup>
+        </>;
       };
     return (
         <>

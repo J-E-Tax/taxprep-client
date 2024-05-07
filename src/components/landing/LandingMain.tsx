@@ -1,5 +1,7 @@
-import { Address, ExtendedNav, Footer, FooterNav, GovBanner, Grid, GridContainer, Header, Logo, MediaBlockBody, Menu, NavDropDownButton, NavMenuButton, SocialLink, SocialLinks, Title } from "@trussworks/react-uswds";
+import { Address, ExtendedNav, Footer, FooterNav, GovBanner, Grid, GridContainer, Header, Logo, MediaBlockBody, Menu, NavDropDownButton, NavMenuButton, SocialLink, SocialLinks, Title, Icon } from "@trussworks/react-uswds";
 import { Fragment, useState } from "react";
+import happyTax from '../../assets/happyTax.jpeg';
+import './LandingMainStyle.css';
 
 function LandingMain() {
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -15,24 +17,20 @@ function LandingMain() {
       setMobileNavOpen(prevOpen => !prevOpen);
     };
 
-    const primaryNavItems = [<Fragment key="primaryNav_0">
-        <NavDropDownButton menuId="extended-nav-section-one" isOpen={navDropdownOpen[0]} label="Current section" onToggle={(): void => {
-        handleToggleNavDropdown(0);
-      }} isCurrent />
-        <Menu id="extended-nav-section-one" items={new Array(3).fill(<a href="#">Navigation link</a>)} isOpen={navDropdownOpen[0]} />
-      </Fragment>, <Fragment key="primaryNav_1">
-        <NavDropDownButton menuId="extended-nav-section-two" isOpen={navDropdownOpen[1]} label="Section" onToggle={(): void => {
-        handleToggleNavDropdown(1);
-      }} />
-        <Menu id="extended-nav-section-two" items={new Array(3).fill(<a href="#">Navigation link</a>)} isOpen={navDropdownOpen[1]} />
-      </Fragment>, <a key="primaryNav_2" className="usa-nav__link" href="javascript:void(0)">
-        <span>Simple link</span>
-      </a>];
-    const secondaryNavItems = [<a key="secondaryNav_0" href="">
-        Secondary link
-      </a>, <a key="secondaryNav_1" href="">
-        Another secondary link
-      </a>];
+    const primaryNavItems = [<a key="primaryNav_0" href="/">
+        About us</a>,
+        <a key="secondaryNav_1" href="/signUp">
+          2024 tax bracket chart
+        </a>];
+
+    const secondaryNavItems = [<div className="navigation-links">
+      <a className="usa-button usa-button--outline" key="secondaryNav_0" href="/multipleLogin">
+        Sign in
+      </a>
+      <a className="usa-button usa-button--outline" key="secondaryNav_1" href="/signUp">
+        Sign up
+      </a>
+    </div>];
     const returnToTop = <GridContainer className="usa-footer__return-to-top">
         <a href="#">Return to top</a>
       </GridContainer>;
@@ -76,7 +74,7 @@ function LandingMain() {
         </Header>
 
         <main id="main-content">
-          <section className="usa-hero" aria-label="Introduction">
+          <section className="usa-hero" aria-label="Introduction" style={{ backgroundImage: `url(${happyTax})`}}>
             <GridContainer>
               <div className="usa-hero__callout">
                 <h1 className="usa-hero__heading">
@@ -211,5 +209,6 @@ function LandingMain() {
       </>
       );
 }
+
 
 export default LandingMain;

@@ -1,37 +1,64 @@
 
-import { useState } from 'react';
+import { useEffect} from 'react';
 import { Card, CardHeader, CardBody } from '@trussworks/react-uswds';
-
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getTaxFormsByUserId } from '../../api/resultsApi';
+import { setTaxReturns, calculateTaxReturnSummary, selectTaxReturnSummary } from '../../features/results/resultsSlice';
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "./groovyWalk.json";
+import store, { RootState } from '../../app/store';
+import Confetti from 'react-confetti';
 
 function TaxResults () {
 
-    const [refund] = useState(300);
-    const [income] = useState(50000);
-    const [deductions] = useState(10000);
-    const [taxableIncome] = useState(40000);
-    const [marginalTaxRate] = useState(22);
-    const [totalFederalTax] = useState(8800);
+    const dispatch = useDispatch();
+    const userId = useSelector((state: RootState) => state.auth.userId);
+    const taxReturnSummary = useSelector(selectTaxReturnSummary);
+    const showConfetti = taxReturnSummary && taxReturnSummary.totalIncome > 0; // This is to only show confetti if tax return has been calculated
 
-  return (
-    <div className="results-container" style={{ maxWidth: '500px', margin: '20px auto' }}>
-      <Card>
-        <CardHeader>
-          <h2>Your Estimated Federal Refund</h2>
-        </CardHeader>
-        <CardBody>
+    useEffect(() => {
+      getTaxFormsByUserId(userId)
+        .then((res) => {
+          dispatch(setTaxReturns(res.data));
+          dispatch(calculateTaxReturnSummary());
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }, [dispatch, userId]);
 
-          {refund >= 0 ? <p style={{ color: 'green' }}>Refund: ${refund}.</p> : <p style={{ color: 'red' }}>Owed ${refund}.</p>}
-          <ul style={{ listStyleType: 'none', padding: 0 }}>
-            <li><strong>Income:</strong> ${income}</li>
-            <li><strong>Deductions:</strong> ${deductions}</li>
-            <li><strong>Taxable Income:</strong> ${taxableIncome}</li>
-            <li><strong>Marginal Tax Rate:</strong> {marginalTaxRate}%</li>
-            <li><strong>Total Federal Tax:</strong> ${totalFederalTax}</li>
-          </ul>
-        </CardBody>
-      </Card>
-    </div>
-  );
+    return (
+      <div className="results-container" style={{ maxWidth: '500px', margin: '20px auto' }}>
+        {/* This is the confetti effect, will show if showConfetti is true */}
+        {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
+        <Card>
+          <CardHeader className="bg-primary">
+            <h2 className="text-white">Your Estimated Federal Refund</h2>
+          </CardHeader>
+          <CardBody>
+              {taxReturnSummary && taxReturnSummary.totalIncome > 0 ? (
+                <>
+                  {taxReturnSummary.totalTaxRefundOrOwed >= 0 ?
+                    <p style={{ color: 'green' }}>Refund: ${taxReturnSummary.totalTaxRefundOrOwed}.</p> :
+                    <p style={{ color: 'red' }}>Owed ${taxReturnSummary.totalTaxRefundOrOwed}.</p>
+                  }
+                  <ul style={{ listStyleType: 'none', padding: 0 }}>
+                    <li><strong>Income:</strong> ${taxReturnSummary.totalIncome}</li>
+                    <li><strong>Deductions:</strong> ${taxReturnSummary.totalDeductions}</li>
+                    <li><strong>Taxable Income:</strong> ${taxReturnSummary.totalTaxableIncome}</li>
+                    <li><strong>Marginal Tax Rate:</strong> {taxReturnSummary.marginalTaxRate}%</li>
+                    <li><strong>Total Federal Tax:</strong> ${taxReturnSummary.totalFederalTax}</li>
+                  </ul>
+                </>
+              ) : (
+                <p>Tax results cannot be accessed until your tax forms are completed</p>
+              )}
+          </CardBody>
+        </Card>
+        <Lottie animationData={groovyWalkAnimation} />;
+      </div>
+    );
 }
 
 export default TaxResults;

@@ -17,10 +17,10 @@ import MultipleLoginPage from './pages/MultipleLogin';
 function App() {
   const {formID} = useParams();
 
-//   const dispatch = useDispatch();
-//   useEffect(() => {
-//     dispatch(initializeAuth());
-// }, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(initializeAuth());
+}, [dispatch]);
 
   return (
     <Router>

@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import taxpayerInfoReducer from '../features/taxpayerInfo/taxpayerInfoSlice';
 import taxformInfoReducer from '../features/taxforminfo/taxformInfoSlice';
 import authSlice from '../features/auth/authSlice';
+import taxReturnReducer from '../features/results/resultsSlice';
 
 const store = configureStore({
     reducer: {
         taxpayerInfo: taxpayerInfoReducer,
         auth: authSlice,
-        taxformInfo : taxformInfoReducer
+        taxformInfo : taxformInfoReducer,
+        taxReturn: taxReturnReducer,
     },
 });
 

@@ -44,6 +44,7 @@ function TaxpayerInfoForm () {
         // need to serialize address object to JSON string before sending to API
         const payload = {
             ...taxpayerInfo,
+            ssn: taxpayerInfo.ssn.replace(/\D/g, ''), // This is to remove non characters from SSN
             address: JSON.stringify(taxpayerInfo.address)
         };
 
@@ -138,6 +139,7 @@ function TaxpayerInfoForm () {
                                 <FormGroup>
                                     <Label htmlFor="ssn">Social Security Number</Label>
                                     <TextInputMask
+                                        key={taxpayerInfo.ssn}
                                         id='ssn'
                                         name='ssn'
                                         type='text'
@@ -169,12 +171,10 @@ function TaxpayerInfoForm () {
                             <Grid col={6}>
                                 <FormGroup>
                                     <Label htmlFor="phoneNumber">Phone Number</Label>
-                                    <TextInputMask
+                                    <TextInput
                                         id="phoneNumber"
                                         name="phoneNumber"
                                         type="text"
-                                        mask="###-###-####"
-                                        pattern="^\d{3}-\d{3}-\d{4}$"
                                         aria-labelledby="phoneNumber"
                                         aria-describedby="hint-phoneNumber"
                                         value={taxpayerInfo.phoneNumber}
@@ -229,13 +229,11 @@ function TaxpayerInfoForm () {
 
                         <FormGroup>
                             <Label htmlFor="zip">ZIP Code</Label>
-                            <TextInputMask
+                            <TextInput
                                 id="zip"
                                 name="address.zip"
                                 type="text"
                                 inputSize="medium"
-                                mask="#####-####"
-                                pattern="^[0-9]{5}(?:-[0-9]{4})?$"
                                 aria-labelledby="zip"
                                 aria-describedby="hint-zip"
                                 value={taxpayerInfo.address.zip}

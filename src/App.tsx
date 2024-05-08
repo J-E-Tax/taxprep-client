@@ -12,12 +12,17 @@ import LandingPage from './pages/LandingPage'
 import MainPage from './pages/MainPage';
 import ResultsPage from './pages/ResultsPage';
 import MultipleLoginPage from './pages/MultipleLogin';
+
+//import './App.css'
+import TaxManagerPage from './pages/TaxManagerPage';
+
 import PageFooter from './utils/PageFooter';
 import './i18n';
 // import './App.css'
 
+
 function App() {
-  const {formID} = useParams();
+  //const {formID} = useParams();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -34,9 +39,10 @@ function App() {
         <Route path="/multipleLogin" element={<MultipleLoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signUp" element={<SignUpPage />} />
-        <Route path="/taxes/:formID" element={<TaxFormInfoPage />} />
-        <Route path="/taxes" element={<TaxFormInfoPage />} />
+        <Route path="/taxes/:formType/:formID" element={<TaxFormInfoPage />} />
+        <Route path="/taxes/:formType" element={<TaxFormInfoPage />} />
         <Route path="/results" element={<ResultsPage />} />
+        <Route path="/UserTaxes" element={<TaxManagerPage />} />
       </Routes>
       <PageFooter />
     </Router>

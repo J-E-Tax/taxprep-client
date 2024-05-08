@@ -1,9 +1,16 @@
-import { Address, ExtendedNav, Footer, FooterNav, GovBanner, Grid, GridContainer, Header, Logo, MediaBlockBody, Menu, NavDropDownButton, NavMenuButton, SocialLink, SocialLinks, Title, Icon } from "@trussworks/react-uswds";
+import { Address, ExtendedNav, Footer, FooterNav, GovBanner, Grid, GridContainer, Header, Logo, MediaBlockBody, Menu, NavDropDownButton, NavMenuButton, SocialLink, SocialLinks, Title, Icon, LanguageSelector } from "@trussworks/react-uswds";
 import { Fragment, useState } from "react";
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import happyTax from '../../assets/happyTax.jpeg';
+import Lottie from "lottie-react";
+import JoeAndEricLogo from "../../utils/JoeAndEricLogo.json";
+import LandingMiddle from "./LandingMiddle.json"
 import './LandingMainStyle.css';
 
 function LandingMain() {
+
+    const { t, i18n } = useTranslation();
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
     const [navDropdownOpen, setNavDropdownOpen] = useState([false, false]);
     const handleToggleNavDropdown = (index: number): void => {
@@ -17,39 +24,57 @@ function LandingMain() {
       setMobileNavOpen(prevOpen => !prevOpen);
     };
 
-    const primaryNavItems = [<a key="primaryNav_0" href="/">
-        About us</a>,
-        <a key="secondaryNav_1" href="/signUp">
-          2024 tax bracket chart
-        </a>];
+    const primaryNavItems = [
+        <a key="secondaryNav_1" href="https://www.irs.gov/newsroom/irs-provides-tax-inflation-adjustments-for-tax-year-2024">
+          {t('landing.taxBracketChart')}
+        </a>, <LanguageSelector
+        label="Languages"
+        langs={[
+          {
+            attr: 'zh',
+            label: '简体字',
+            label_local: 'Chinese - Simplified',
+            on_click: () => i18next.changeLanguage('zh')
+          },
+          {
+            attr: 'en',
+            label: 'English',
+            on_click: () => i18next.changeLanguage('en')
+          },
+          {
+            attr: 'es',
+            label: 'Español',
+            label_local: 'Spanish',
+            on_click: () => i18next.changeLanguage('es')
+          }
+        ]}
+      />
+        ];
 
     const secondaryNavItems = [<div className="navigation-links">
       <a className="usa-button usa-button--outline" key="secondaryNav_0" href="/multipleLogin">
-        Sign in
+        {t('landing.signIn')}
       </a>
       <a className="usa-button usa-button--outline" key="secondaryNav_1" href="/signUp">
-        Sign up
+      { t('landing.signUp')}
       </a>
     </div>];
     const returnToTop = <GridContainer className="usa-footer__return-to-top">
-        <a href="#">Return to top</a>
+        <a href="#">{t('landing.returnToTop')}</a>
       </GridContainer>;
     const socialLinkItems = [<SocialLink key="facebook" name="Facebook" href="#" />, <SocialLink key="twitter" name="Twitter" href="#" />, <SocialLink key="youtube" name="YouTube" href="#" />, <SocialLink key="instagram" name="Instagram" href="#" />, <SocialLink key="rss" name="RSS" href="#" />];
-    const footerPrimary = <FooterNav aria-label="Footer navigation" size="medium" links={Array(5).fill(<a href="javascript:void(0)" className="usa-footer__primary-link">
-            Primary link
-          </a>)} />;
     const footerSecondary = <>
         <Grid row gap>
-          <Logo size="medium" image={<img className="usa-footer__logo-img" alt="" />} heading={<p className="usa-footer__logo-heading">Name of Agency</p>} />
+          <Logo size="medium" image={<img className="usa-footer__logo-img" alt="" />} heading={<p className="usa-footer__logo-heading">J&E Tax Pro</p>} />
           <Grid className="usa-footer__contact-links" mobileLg={{
           col: 6
         }}>
             <SocialLinks links={socialLinkItems} />
-            <h3 className="usa-footer__contact-heading">Agency Contact Center</h3>
+            <h3 className="usa-footer__contact-heading">{t('landing.contactHeading')}</h3>
             <Address size="medium" items={[<a key="telephone" href="tel:1-800-555-5555">
-                  (800) CALL-GOVT
+              {t('landing.callGovt')}
                 </a>, <a key="email" href="mailto:info@agency.gov">
-                  info@agency.gov
+                  info@jetaxpro.com
                 </a>]} />
           </Grid>
         </Grid>
@@ -63,9 +88,7 @@ function LandingMain() {
         <Header extended showMobileOverlay={mobileNavOpen}>
           <div className="usa-navbar">
             <Title id="extended-logo">
-              <a href="/" title="Home" aria-label="Home">
-                Project title
-              </a>
+              <Lottie animationData={JoeAndEricLogo}  style={{ width: "150px" }} />
             </Title>
             <NavMenuButton label="Menu" onClick={toggleMobileNav} className="usa-menu-btn" />
           </div>
@@ -78,14 +101,14 @@ function LandingMain() {
             <GridContainer>
               <div className="usa-hero__callout">
                 <h1 className="usa-hero__heading">
-                  <span className="usa-hero__heading--alt">Federal Return:</span>
-                  100% accurate, however you file
+                  <span className="usa-hero__heading--alt">{t('landing.federalReturnHeading')}</span>
+                  {t('landing.federalReturnSubheading')}
                 </h1>
                 <p>
-                E-File directly to the IRS. Our calculations are 100% accurate, guaranteed.
+                {t('landing.efileDirectly')}
                 </p>
                 <a className="usa-button" href="/multiplelogin">
-                  Get Started
+                {t('landing.getStarted')}
                 </a>
               </div>
             </GridContainer>
@@ -97,115 +120,47 @@ function LandingMain() {
               col: 4
             }}>
                 <h2 className="font-heading-xl margin-top-0 tablet:margin-bottom-0">
-                  A tagline highlights your approach
+                {t('landing.maximizeRefundsHeading')}
                 </h2>
               </Grid>
               <Grid tablet={{
               col: 8
             }} className="usa-prose">
                 <p>
-                  The tagline should inspire confidence and interest, focusing on
-                  the value that your overall approach offers to your audience.
-                  Use a heading typeface and keep your tagline to just a few
-                  words, and don’t confuse or mystify.
+                {t('landing.navigateTaxSeason')}
                 </p>
                 <p>
-                  Use the right side of the grid to explain the tagline a bit
-                  more. What are your goals? How do you do your work? Write in the
-                  present tense, and stay brief here. People who are interested
-                  can find details on internal pages.
+                {t('landing.preptaxProDescription')}
                 </p>
               </Grid>
             </Grid>
           </section>
 
-          <section className="usa-graphic-list usa-section usa-section--dark">
-            <GridContainer>
-              <Grid row gap className="usa-graphic-list__row">
-                <Grid tablet={{
-                col: true
-              }} className="usa-media-block">
-                  <img className="usa-media-block__img" alt="Alt text" />
-                  <MediaBlockBody>
-                    <h2 className="usa-graphic-list__heading">
-                      Graphic headings can vary.
-                    </h2>
-                    <p>
-                      Graphic headings can be used a few different ways, depending
-                      on what your landing page is for. Highlight your values,
-                      specific program areas, or results.
-                    </p>
-                  </MediaBlockBody>
-                </Grid>
-                <Grid tablet={{
-                col: true
-              }} className="usa-media-block">
-                  <img className="usa-media-block__img" alt="Alt text" />
-                  <MediaBlockBody>
-                    <h2 className="usa-graphic-list__heading">
-                      Stick to 6 or fewer words.
-                    </h2>
-                    <p>
-                      Keep body text to about 30 words. They can be shorter, but
-                      try to be somewhat balanced across all four. It creates a
-                      clean appearance with good spacing.
-                    </p>
-                  </MediaBlockBody>
-                </Grid>
-              </Grid>
-              <Grid row gap className="usa-graphic-list__row">
-                <Grid tablet={{
-                col: true
-              }} className="usa-media-block">
-                  <img className="usa-media-block__img"  alt="Alt text" />
-                  <MediaBlockBody>
-                    <h2 className="usa-graphic-list__heading">
-                      Never highlight anything without a goal.
-                    </h2>
-                    <p>
-                      For anything you want to highlight here, understand what
-                      your users know now, and what activity or impression you
-                      want from them after they see it.
-                    </p>
-                  </MediaBlockBody>
-                </Grid>
-                <Grid tablet={{
-                col: true
-              }} className="usa-media-block">
-                  <img className="usa-media-block__img"  alt="Alt text" />
-                  <MediaBlockBody>
-                    <h2 className="usa-graphic-list__heading">
-                      Could also have 2 or 6.
-                    </h2>
-                    <p>
-                      In addition to your goal, find out your users’ goals. What
-                      do they want to know or do that supports your mission? Use
-                      these headings to show these.
-                    </p>
-                  </MediaBlockBody>
-                </Grid>
-              </Grid>
-            </GridContainer>
+          <section className="usa-graphic-list usa-section usa-section--dark" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'}}>
+
+            <Lottie animationData={JoeAndEricLogo}  style={{ width: "200px" }} />
+            <Lottie animationData={LandingMiddle}  style={{ width: "250px" }} />
+
+            <Lottie animationData={JoeAndEricLogo}  style={{ width: "200px" }} />
           </section>
 
           <section id="test-section-id" className="usa-section">
             <GridContainer>
-              <h2 className="font-heading-xl margin-y-0">Section heading</h2>
+              <h2 className="font-heading-xl margin-y-0">{t('landing.freeFederalHeading')}</h2>
               <p className="usa-intro">
-                Everything up to this point should help people understand your
-                agency or project: who you are, your goal or mission, and how you
-                approach it. Use this section to encourage them to act. Describe
-                why they should get in touch here, and use an active verb on the
-                button below. “Get in touch,” “Learn more,” and so on.
+              {t('landing.experienceSimplicity')}
               </p>
-              <a href="#" className="usa-button usa-button--big">
-                Call to action
+              <a href="/multiplelogin" className="usa-button usa-button--big">
+              {t('landing.callToAction')}
               </a>
             </GridContainer>
           </section>
         </main>
 
-        <Footer returnToTop={returnToTop} primary={footerPrimary} secondary={footerSecondary} />
+        <Footer returnToTop={returnToTop} secondary={footerSecondary} />
       </>
       );
 }

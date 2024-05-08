@@ -12,6 +12,7 @@ import LandingPage from './pages/LandingPage'
 import MainPage from './pages/MainPage';
 import ResultsPage from './pages/ResultsPage';
 import MultipleLoginPage from './pages/MultipleLogin';
+import './i18n';
 // import './App.css'
 
 function App() {

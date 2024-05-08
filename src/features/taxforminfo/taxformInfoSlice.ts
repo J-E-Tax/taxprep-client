@@ -3,10 +3,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface w2 {
         a : string,
         b : string,
-        c : string,
+        cname: string,
+        cstreet : string,
+        ccity : string,
+        cstate : string,
+        czip : string,
         d : string,
         e : string,
-        f : string,
+        fstreet : string,
+        fcity : string,
+        fstate : string,
+        fzip : string,
         l1 : string,
         l2 : string,
         l3 : string,
@@ -18,12 +25,10 @@ interface w2 {
         l9 : string,
         l10 : string,
         l11 : string,
-        l12 : {
-          a : string,
-          b : string,
-          c : string,
-          d : string
-        },
+        l12a : string,
+        l12b : string,
+        l12c : string,
+        l12d : string,
         l13 : {
           StatEmp : string,
           Retirement_Plan : string,
@@ -66,6 +71,19 @@ interface w2 {
 interface notW2 {
 
 }
+interface items {
+  a: string,
+  b: string,
+  c: string,
+  d: string;
+}
+
+interface Address {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+}
 
 export interface TaxFormInfoState{
     taxFormId : number,
@@ -83,10 +101,17 @@ const initialState: TaxFormInfoState = {
     formDetails : {
         a : "",
         b : "",
-        c : "",
+        cname: "",
+        cstreet : "",
+        ccity : "",
+        cstate : "",
+        czip : "",
         d : "",
         e : "",
-        f : "",
+        fstreet : "",
+        fcity : "",
+        fstate : "",
+        fzip : "",
         l1 : "",
         l2 : "",
         l3 : "",
@@ -98,12 +123,10 @@ const initialState: TaxFormInfoState = {
         l9 : "",
         l10 : "",
         l11 : "",
-        l12 : {
-          a : "",
-          b : "",
-          c : "",
-          d : ""
-        },
+        l12a: "",
+        l12b : "",
+        l12c : "",
+        l12d : "",
         l13 : {
           StatEmp : "",
           Retirement_Plan : "",

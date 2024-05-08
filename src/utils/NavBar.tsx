@@ -12,20 +12,20 @@
         const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
         const handleLogout = () => {
-            logoutUser()
-                .then(() => {
+            // logoutUser()
+            //     .then(() => {
                     dispatch(logout());
                     navigate('/login');
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
+                
+                // .catch((err) => {
+                //     console.error(err);
+                // });
         };
 
         const items = [
             <a href="/main" key="home">Home</a>,
             <a href="" key="personalInfo">Personal Info</a>,
-            <a href="" key="taxInfo">Tax Info</a>,
+            <a href="/UserTaxes" key="taxInfo">Tax Info</a>,
             <a href="" key="review">Review</a>,
             <a href="" key="taxResults">Tax Results</a>,
             <button onClick={handleLogout} key="logout">Logout</button>

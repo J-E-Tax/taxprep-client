@@ -27,3 +27,7 @@ export const createTaxForm = (taxForm : TaxForm) => {
 export const updateTaxForm = (taxForm : TaxForm) => {
     return apiClientJJ.put(`/taxes/update`, taxForm);
 }
+
+export const getTaxForms = (userId: number) => {
+    return apiClientJJ.get(`/taxes/form/${userId}`);
+}

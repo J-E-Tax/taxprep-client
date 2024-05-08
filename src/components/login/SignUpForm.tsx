@@ -2,6 +2,8 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { signUp } from '../../api/authApi';
 import { Alert, Button, Fieldset, Form, GovBanner, Grid, GridContainer, Header, Label, Link, MediaBlockBody, TextInput, Title } from "@trussworks/react-uswds";
+import Lottie from "lottie-react";
+import JoeAndEricLogo from "../../utils/JoeAndEricLogo.json";
 
 function SignUpForm() {
     const navigate = useNavigate();
@@ -41,7 +43,7 @@ function SignUpForm() {
         <div className="usa-navbar">
           <Title id="extended-logo">
             <a href="/" title="Home" aria-label="Home">
-              Project title
+              <Lottie animationData={JoeAndEricLogo}  style={{ width: "150px" }} />
             </a>
           </Title>
         </div>
@@ -130,22 +132,34 @@ function SignUpForm() {
 
                   <div className="usa-prose">
                     <p>
-                      Here’s space for a longer description to introduce 3-5
-                      easily scannable bullet points. Note that on mobile, this
-                      text block will bump below the Create Account form.
+                      Create a free account with us and we'll help you with your tax preparation. Here are just a few reasons why setting up an account is a great step towards managing your taxes more effectively:
                     </p>
                     <section className="usa-graphic-list">
                       <div className="usa-graphic-list__row">
-                        {Array.from(Array(3), (_, idx) => <div className="usa-media-block margin-y-2" key={idx}>
-                            {/* <img className="usa-media-block__img height-7 width-7" src={circleSvg} alt="Alt text" /> */}
+                        <div className="usa-media-block margin-y-2">
                             <MediaBlockBody>
                               <p>
-                                <strong>Value proposition {idx + 1}:</strong>{' '}
-                                Vivamus nec velit sed leo scelerisque laoreet
-                                vestibulum.
+                                <strong>Simplified Document Handling:</strong>{' '}
+                                Our system helps organize and prepare your files for filing, saving you time and effort.
                               </p>
                             </MediaBlockBody>
-                          </div>)}
+                          </div>
+                          <div className="usa-media-block margin-y-2">
+                            <MediaBlockBody>
+                            <p>
+                                <strong>Streamlined Tax Filing:</strong>{' '}
+                                Our platform simplifies the tax filing process, making it faster and easier to submit your taxes accurately and on time.
+                              </p>
+                            </MediaBlockBody>
+                          </div>
+                          <div className="usa-media-block margin-y-2">
+                            <MediaBlockBody>
+                            <p>
+                                <strong>Secure Document Storage:</strong>{' '}
+                                Safely store all your tax documents in one secure location with encrypted access, ensuring your sensitive information is protected.
+                              </p>
+                            </MediaBlockBody>
+                          </div>
                       </div>
                     </section>
                   </div>

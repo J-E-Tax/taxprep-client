@@ -40,8 +40,8 @@ export const taxpayerInfoSlice = createSlice({
     name: 'taxpayerInfo',
     initialState,
     reducers: {
-        setTaxpayerInfo: (state, action: PayloadAction<TaxpayerInfoState>) => {
-            return action.payload;
+        setTaxpayerInfo: (state, action: PayloadAction<Partial<TaxpayerInfoState>>) => {
+            return { ...state, ...action.payload };
         },
         resetTaxPayInfo: () => initialState,
     }

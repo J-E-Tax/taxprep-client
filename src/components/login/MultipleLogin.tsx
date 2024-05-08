@@ -1,5 +1,7 @@
 import { Button, GovBanner, Grid, GridContainer, Header, MediaBlockBody, Title } from "@trussworks/react-uswds";
 import { Link } from 'react-router-dom';
+import Lottie from "lottie-react";
+import JoeAndEricLogo from "../../utils/JoeAndEricLogo.json";
 
 
 function MultipleLogin () {
@@ -20,7 +22,7 @@ function MultipleLogin () {
         <div className="usa-navbar">
           <Title id="extended-logo">
             <a href="/" title="Home" aria-label="Home">
-              Project title
+              <Lottie animationData={JoeAndEricLogo}  style={{ width: "150px" }} />
             </a>
           </Title>
         </div>
@@ -109,7 +111,6 @@ function MultipleLogin () {
                     <section className="usa-graphic-list">
                       <div className="usa-graphic-list__row">
                         <div className="usa-media-block margin-y-2">
-                            <img className="usa-media-block__img height-7 width-7" alt="Alt text" />
                             <MediaBlockBody>
                               <p>
                                 <strong>Simplified Document Handling:</strong>{' '}
@@ -118,20 +119,18 @@ function MultipleLogin () {
                             </MediaBlockBody>
                           </div>
                           <div className="usa-media-block margin-y-2">
-                            <img className="usa-media-block__img height-7 width-7" alt="Alt text" />
                             <MediaBlockBody>
                             <p>
-                                <strong>Secure and Easy Access:</strong>{' '}
-                                Our system helps organize and prepare your files for filing, saving you time and effort.
+                                <strong>Streamlined Tax Filing:</strong>{' '}
+                                Our platform simplifies the tax filing process, making it faster and easier to submit your taxes accurately and on time.
                               </p>
                             </MediaBlockBody>
                           </div>
                           <div className="usa-media-block margin-y-2">
-                            <img className="usa-media-block__img height-7 width-7" alt="Alt text" />
                             <MediaBlockBody>
                             <p>
-                                <strong>Secure and Easy Access:</strong>{' '}
-                                Our system helps organize and prepare your files for filing, saving you time and effort.
+                                <strong>Secure Document Storage:</strong>{' '}
+                                Safely store all your tax documents in one secure location with encrypted access, ensuring your sensitive information is protected.
                               </p>
                             </MediaBlockBody>
                           </div>

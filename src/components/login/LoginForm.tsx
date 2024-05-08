@@ -2,6 +2,8 @@ import {  FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/authApi';
+import Lottie from "lottie-react";
+import JoeAndEricLogo from "../../utils/JoeAndEricLogo.json";
 import { loginStart, loginSuccess, loginFail } from '../../features/auth/authSlice';
 
 import { Button, Form, TextInput, Label, GovBanner, Header, Title, GridContainer, Grid, Fieldset, Link } from '@trussworks/react-uswds';
@@ -47,7 +49,7 @@ function LoginForm() {
         <div className="usa-navbar">
           <Title id="extended-logo">
             <a href="/" title="Home" aria-label="Home">
-              Project title
+              <Lottie animationData={JoeAndEricLogo}  style={{ width: "150px" }} />
             </a>
           </Title>
         </div>
@@ -65,7 +67,7 @@ function LoginForm() {
                 <div className="bg-white padding-y-3 padding-x-5 border border-base-lighter">
                   <h1 className="margin-bottom-0">Sign in</h1>
                   <Form onSubmit={handleLogin}>
-                    <Fieldset legend="Access your account" legendStyle="large">
+                    <Fieldset legend="" legendStyle="large">
                       <Label htmlFor="email">Email address</Label>
                       <TextInput id="email" name="email" type="email" autoCorrect="off" autoCapitalize="off" required={true} value={email} onChange={(e) => setEmail(e.target.value)} />
 

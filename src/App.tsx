@@ -12,6 +12,7 @@ import LandingPage from './pages/LandingPage'
 import MainPage from './pages/MainPage';
 import ResultsPage from './pages/ResultsPage';
 import MultipleLoginPage from './pages/MultipleLogin';
+import PageFooter from './utils/PageFooter';
 import './i18n';
 // import './App.css'
 
@@ -37,6 +38,7 @@ function App() {
         <Route path="/taxes" element={<TaxFormInfoPage />} />
         <Route path="/results" element={<ResultsPage />} />
       </Routes>
+      <PageFooter />
     </Router>
   )
 }

@@ -8,7 +8,7 @@ function MainPage() {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      height: '100vh',
+      height: '80vh',
       paddingTop: '5rem',
     }}>
       <h2>What Would You Like To Do?</h2>

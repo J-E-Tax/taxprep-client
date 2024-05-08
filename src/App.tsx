@@ -12,10 +12,14 @@ import LandingPage from './pages/LandingPage'
 import MainPage from './pages/MainPage';
 import ResultsPage from './pages/ResultsPage';
 import MultipleLoginPage from './pages/MultipleLogin';
+
+//import './App.css'
+import TaxManagerPage from './pages/TaxManagerPage';
+
 import PageFooter from './utils/PageFooter';
 import './i18n';
-import './App.css'
-import TaxManagerPage from './pages/TaxManagerPage';
+// import './App.css'
+
 
 function App() {
   //const {formID} = useParams();

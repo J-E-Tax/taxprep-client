@@ -11,6 +11,7 @@ function NavBar() {
 
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
+
     const handleLogout = () => {
         dispatch(logout());
         navigate('/login');
@@ -24,6 +25,7 @@ function NavBar() {
         <a href="/results" key="taxResults">Tax Results</a>,
         <button onClick={handleLogout} key="logout">Logout</button>
     ];
+
 
     return (
         <div style={{ borderBottom: '1px solid #808080' }}>

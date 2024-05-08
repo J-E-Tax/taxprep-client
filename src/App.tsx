@@ -12,6 +12,8 @@ import LandingPage from './pages/LandingPage'
 import MainPage from './pages/MainPage';
 import ResultsPage from './pages/ResultsPage';
 import MultipleLoginPage from './pages/MultipleLogin';
+import PageFooter from './utils/PageFooter';
+import './i18n';
 import './App.css'
 import TaxManagerPage from './pages/TaxManagerPage';
 
@@ -38,6 +40,7 @@ function App() {
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/UserTaxes" element={<TaxManagerPage />} />
       </Routes>
+      <PageFooter />
     </Router>
   )
 }

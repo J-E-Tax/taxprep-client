@@ -1,10 +1,14 @@
 import { ButtonGroup, Modal, ModalFooter, ModalHeading, ModalRef, ModalToggleButton } from "@trussworks/react-uswds";
 import { useNavigate } from 'react-router-dom';
 import { useRef } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { calculateAndSaveTaxReturnsForUser } from "../../api/resultsApi";
 
 function ResultsModal()  {
     const modalRef = useRef<ModalRef>(null);
     const navigate = useNavigate();
+    const userId = useSelector((state: RootState) => state.auth.userId);
 
     return (
         <div>
@@ -23,9 +27,21 @@ function ResultsModal()  {
           </div>
           <ModalFooter>
             <ButtonGroup>
-              <ModalToggleButton modalRef={modalRef} closer onClick={() => {
-                    modalRef.current?.toggleModal();
-                    navigate('/results') }}>
+                <ModalToggleButton modalRef={modalRef} closer onClick={() => {
+                    if (!userId || userId === 0) {
+                        return;
+                    }
+                    calculateAndSaveTaxReturnsForUser(userId)
+                        .then((res) => {
+                            console.log(res);
+                            modalRef.current?.toggleModal();
+                            navigate('/results');
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        }
+                    );
+                }}>
                 Submit and see results
               </ModalToggleButton>
               <ModalToggleButton modalRef={modalRef} closer unstyled className="padding-105 text-center">

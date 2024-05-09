@@ -18,7 +18,7 @@ function MainVerticalStepper() {
 
   const steps = [
     { name: 'Personal Info', content: 'Detail your personal information.  ', path: '/taxpayer-info' },
-    { name: 'Wages & Income', content: 'Detail your wages and income sources.' , path: '/taxes'},
+    { name: 'Wages & Income', content: 'Detail your wages and income sources.' , path: '/userTaxes'},
     { name: 'Review', content: 'Review your entries.' , path: '/taxpayer-info'},
     { name: 'Results', content: 'Finish and file your taxes.', path: '/results' }
   ];

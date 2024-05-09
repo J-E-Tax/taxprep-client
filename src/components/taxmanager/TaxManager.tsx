@@ -6,6 +6,8 @@ import { TaxFormInfoState } from '../../features/taxforminfo/taxformInfoSlice';
 import { Card, CardHeader, CardBody, CardFooter, Button, GridContainer, Grid, CardGroup } from '@trussworks/react-uswds';
 import { useNavigate } from 'react-router-dom';
 import { w2 } from '../../features/taxforminfo/taxformInfoSlice';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const DisplayTaxForms: React.FC = () => {
   const userId = useSelector((state: RootState) => state.auth.userId);
@@ -15,8 +17,8 @@ const DisplayTaxForms: React.FC = () => {
 
   const [shouldRerender, setShouldRerender] = useState<boolean>(false);
   const dispatch = useDispatch();
-  
-  
+
+
   useEffect(() => {
     fetchData(); // Fetch data when component mounts
   }, [shouldRerender]); // Re-run effect when shouldRerender state changes
@@ -29,32 +31,35 @@ const DisplayTaxForms: React.FC = () => {
 
     return () => clearTimeout(timer); // Cleanup timer on component unmount
   }, []); // Run only once on component mount
-  
- 
+
+
   const fetchData = async () => {
     try {
       const userId2 = userId; // Assuming you obtain the userId correctly
-      const response = await axios.get<TaxFormInfoState[]>(`${import.meta.env.VITE_REACT_URL}/taxform/taxes/users/${userId2}`);
+      const token = cookies.get('token');
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+      const response = await axios.get<TaxFormInfoState[]>(`${import.meta.env.VITE_REACT_URL}/taxform/taxes/users/${userId2}`, config);
       setDataList(response.data); // Update state with fetched data
       createCardComponents(response.data); // Create card components
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
-  
+
 
   const createCardComponents = (data: TaxFormInfoState[]) => {
     const cards = data.map((item) => {
       // Parse the formDetails field if it exists
-      const parsedFormDetails : w2 = JSON.parse(JSON.stringify(item.formDetails));
-      //const parsedFormDetails = item.formDetails as w2;
-      console.log(parsedFormDetails.cname);
+      const parsedFormDetails: w2 = JSON.parse(item.formDetails as unknown as string);
+      console.log(parsedFormDetails);
       console.log(item);
 
       return (
         <Card key={item.taxFormId}>
           <CardHeader>
-            <h2>{item.formType} {parsedFormDetails.cname}</h2>
+            <h2>{item.formType} {parsedFormDetails.c}</h2>
           </CardHeader>
           <CardBody>
             <p>{item.status}</p>
@@ -81,7 +86,7 @@ const DisplayTaxForms: React.FC = () => {
 
   const handleRedirectEdit = (page: any, type:any) => {
     // Redirect to a new route (e.g., '/new-page') when button is clicked
-    
+
     history(`/taxes/${type}/${page}`);
   };
 
@@ -97,7 +102,7 @@ const DisplayTaxForms: React.FC = () => {
                   <p>File a New Tax Form!</p>
                 </CardHeader>
                 <CardBody>
-                  
+
                 </CardBody>
                 <CardFooter>
                   <Button type='button' onClick={handleRedirect}>File W2!</Button>

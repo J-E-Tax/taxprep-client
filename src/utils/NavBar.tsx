@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {logout } from '../features/auth/authSlice';
 import { RootState } from '../app/store';
 import Lottie from "lottie-react";
+import JoeAndEricLogo from "./JoeAndEricLogo.json";
 
 function NavBar() {
     const navigate = useNavigate();
@@ -35,6 +36,7 @@ function NavBar() {
                         { isAuthenticated  &&
                         <>
                             <a href="/" title="Home" aria-label="Home">
+                            <Lottie animationData={JoeAndEricLogo}  style={{ width: "150px" }} />
                             </a>
                             <PrimaryNav items={items} />
                         </>

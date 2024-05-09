@@ -21,12 +21,12 @@ interface TaxReturnSummary {
 }
 
 interface TaxReturnState {
-    taxReturns: TaxReturn[];
+    taxReturns: { [key: number]: TaxReturn };
     taxReturnSummary: TaxReturnSummary | null;
 }
 
 const initialState: TaxReturnState = {
-    taxReturns: [],
+    taxReturns: {},
     taxReturnSummary: null
 };
 
@@ -34,8 +34,9 @@ export const taxReturnSlice = createSlice({
     name: 'taxReturn',
     initialState,
     reducers: {
-        setTaxReturns: (state, action: PayloadAction<TaxReturn[]>) => {
+        setTaxReturns: (state, action: PayloadAction<{ [key: number]: TaxReturn }>) => {
             state.taxReturns = action.payload;
+            console.log('state.taxReturns:', state.taxReturns);
         },
         calculateTaxReturnSummary: (state) => {
             let totalIncome = 0;
@@ -45,7 +46,9 @@ export const taxReturnSlice = createSlice({
             let totalTaxRefundOrOwed = 0;
             let marginalTaxRate = 0;
 
-            for (const taxReturn of state.taxReturns) {
+            let taxReturns = Array.isArray(state.taxReturns) ? state.taxReturns : [state.taxReturns]; // This is to Convert to array if not already
+
+            for (const taxReturn of taxReturns) {
                 totalIncome += taxReturn.totalIncome;
                 totalDeductions += taxReturn.totalDeductions;
                 totalTaxableIncome += taxReturn.taxableIncome;

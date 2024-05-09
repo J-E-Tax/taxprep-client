@@ -16,5 +16,54 @@
       "freeFederalHeading": "Federal Gratis para Todos",
       "experienceSimplicity": "Experimente la simplicidad de declarar sus impuestos con J&E Tax Pro, donde puede procesar sus declaraciones de impuestos federales sin costo alguno! Nuestra plataforma fácil de usar asegura que navegar por la temporada de impuestos sea sin complicaciones y preciso, brindándole tranquilidad. Únase a los miles que están maximizando sus reembolsos y minimizando sus cargas fiscales sin gastar un centavo en tarifas de presentación.",
       "callToAction": "Hacer un llamado a la acción"
-    }
+    },
+    "taxpayerInfo": {
+        "title": "Cuéntanos sobre ti",
+        "firstName": {
+          "label": "Nombre de pila o nombre dado",
+          "placeholder": "Eric",
+          "error": "El nombre solo debe contener letras."
+        },
+        "middleName": {
+          "label": "Segundo nombre",
+          "placeholder": "Joe",
+          "error": "El segundo nombre solo debe contener letras."
+        },
+        "lastName": {
+          "label": "Apellido o nombre familiar",
+          "placeholder": "Chang",
+          "error": "El apellido solo debe contener letras."
+        },
+        "occupation": {
+          "label": "Ocupación",
+          "placeholder": "Desarrollador de Software"
+        },
+        "ssn": {
+          "label": "Número de Seguridad Social",
+          "error": "Introduce un SSN válido (por ejemplo, 123-45-6789)."
+        },
+        "dob": {
+          "label": "Fecha de nacimiento"
+        },
+        "phoneNumber": {
+          "label": "Número de teléfono",
+          "error": "Introduce un número de teléfono válido (por ejemplo, 636-555-1234)."
+        },
+        "address": {
+          "street": {
+            "label": "Calle"
+          },
+          "city": {
+            "label": "Ciudad"
+          },
+          "state": {
+            "label": "Estado"
+          },
+          "zip": {
+            "label": "Código Postal",
+            "error": "Introduce un código postal de 5 dígitos."
+          }
+        },
+        "submitButton": "Guardar y continuar"
+      }
   }

@@ -17,5 +17,54 @@
       "experienceSimplicity": "Experience the simplicity of filing your taxes with J&E Tax Pro, where you can process your federal tax returns at no cost! Our user-friendly platform ensures that navigating through tax season is hassle-free and accurate, giving you peace of mind. Join the thousands who are maximizing their refunds and minimizing their tax burdens without spending a dime on filing fees.",
       "callToAction": "Call to action",
       "EmployerInfo" : "Emplyer Information"
+    },
+    "taxpayerInfo": {
+        "title": "Tell us about yourself",
+        "firstName": {
+        "label": "First or given name",
+        "placeholder": "Eric",
+        "error": "First name should only contain letters."
+        },
+        "middleName": {
+        "label": "Middle Name",
+        "placeholder": "Joe",
+        "error": "Middle name should only contain letters."
+        },
+        "lastName": {
+        "label": "Last or family name",
+        "placeholder": "Chang",
+        "error": "Last name should only contain letters."
+        },
+        "occupation": {
+        "label": "Occupation",
+        "placeholder": "Software Developer"
+        },
+        "ssn": {
+        "label": "Social Security Number",
+        "error": "Enter a valid SSN (e.g., 123-45-6789)."
+        },
+        "dob": {
+        "label": "Date of Birth"
+        },
+        "phoneNumber": {
+        "label": "Phone Number",
+        "error": "Enter a valid phone number (e.g., 636-555-1234)."
+        },
+        "address": {
+            "street": {
+                "label": "Street"
+            },
+            "city": {
+                "label": "City"
+            },
+            "state": {
+                "label": "State"
+            },
+            "zip": {
+                "label": "ZIP Code",
+                "error": "Enter a 5-digit ZIP code."
+            }
+        },
+        "submitButton": "Save and Continue"
     }
   }

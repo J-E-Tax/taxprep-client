@@ -36,6 +36,7 @@ function NavBar() {
                         { isAuthenticated  &&
                         <>
                             <a href="/" title="Home" aria-label="Home">
+
                             <Lottie animationData={JoeAndEricLogo}  style={{ width: "150px" }} /> 
                             </a>
                             <PrimaryNav items={items} />

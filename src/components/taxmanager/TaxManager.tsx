@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { w2 } from '../../features/taxforminfo/taxformInfoSlice';
 import ResultsModal from '../results/ResultsModal';
 import Cookies from 'universal-cookie';
+import { useTranslation } from 'react-i18next';
 const cookies = new Cookies();
 
 const DisplayTaxForms: React.FC = () => {
@@ -15,7 +16,7 @@ const DisplayTaxForms: React.FC = () => {
   const [dataList, setDataList] = useState<TaxFormInfoState[]>([]);
   const [cardComponents, setCardComponents] = useState<JSX.Element[]>([]);
   const history = useNavigate();
-
+  const { t } = useTranslation();
   const [shouldRerender, setShouldRerender] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -63,10 +64,10 @@ const DisplayTaxForms: React.FC = () => {
             <h2>{item.formType} | {parsedFormDetails.cname}</h2>
           </CardHeader>
           <CardBody>
-            <p>Current Status: {item.status}</p>
+            <p>{t('taxforminfo.cus')}: {item.status}</p>
           </CardBody>
           <CardFooter>
-            <Button type='button' onClick={() => handleRedirectEdit(item.taxFormId, item.formType)}>Edit</Button>
+            <Button type='button' onClick={() => handleRedirectEdit(item.taxFormId, item.formType)}>{t('taxforminfo.edit')}</Button>
           </CardFooter>
         </Card>
       );
@@ -100,14 +101,14 @@ const DisplayTaxForms: React.FC = () => {
             <CardGroup>
             <Card>
                 <CardHeader>
-                  <p>File a New Tax Form!</p>
+                  <p>{t('taxforminfo.fantf')}</p>
                 </CardHeader>
                 <CardBody>
 
                 </CardBody>
                 <CardFooter>
-                  <Button type='button' onClick={handleRedirect}>File W2!</Button>
-                  <Button type='button' onClick={handleRedirect1099}>File 1099!</Button>
+                  <Button type='button' onClick={handleRedirect}>{t('taxforminfo.fw2')}</Button>
+                  <Button type='button' onClick={handleRedirect1099}>{t('taxforminfo.f1099')}</Button>
                 </CardFooter>
               </Card>
               {/* Render a card for each tax form */}

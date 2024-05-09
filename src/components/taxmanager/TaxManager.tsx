@@ -6,6 +6,7 @@ import { TaxFormInfoState } from '../../features/taxforminfo/taxformInfoSlice';
 import { Card, CardHeader, CardBody, CardFooter, Button, GridContainer, Grid, CardGroup } from '@trussworks/react-uswds';
 import { useNavigate } from 'react-router-dom';
 import { w2 } from '../../features/taxforminfo/taxformInfoSlice';
+import ResultsModal from '../results/ResultsModal';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
@@ -113,6 +114,15 @@ const DisplayTaxForms: React.FC = () => {
               {cardComponents}
             </CardGroup>
           </Grid>
+          <div style={
+            {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }
+          }>
+            <ResultsModal />
+          </div>
         </GridContainer>
       </div>
     </div>

@@ -1,9 +1,9 @@
 
-import { useEffect} from 'react';
+import { useState, useEffect} from 'react';
 import { Card, CardHeader, CardBody } from '@trussworks/react-uswds';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getTaxFormsByUserId } from '../../api/resultsApi';
+import { getTaxFormsByUserId, calculateAndSaveTaxReturnsForUser } from '../../api/resultsApi';
 import { setTaxReturns, calculateTaxReturnSummary, selectTaxReturnSummary } from '../../features/results/resultsSlice';
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "./groovyWalk.json";
@@ -16,8 +16,23 @@ function TaxResults () {
     const userId = useSelector((state: RootState) => state.auth.userId);
     const taxReturnSummary = useSelector(selectTaxReturnSummary);
     const showConfetti = taxReturnSummary && taxReturnSummary.totalIncome > 0; // This is to only show confetti if tax return has been calculated
+    const [trigger, setTrigger] = useState(false);
 
     useEffect(() => {
+      calculateAndSaveTaxReturnsForUser(userId)
+        .then((res) => {
+          console.log(res);
+          setTrigger(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+    , [userId]);
+
+    // This get will run after calculation is done
+    useEffect(() => {
+      if (!trigger) return;
       getTaxFormsByUserId(userId)
         .then((res) => {
           dispatch(setTaxReturns(res.data));
@@ -26,7 +41,7 @@ function TaxResults () {
         .catch((err) => {
           console.error(err);
         });
-    }, [dispatch, userId]);
+    }, [dispatch, userId, trigger]);
 
     return (
       <div className="results-container" style={{ maxWidth: '500px', margin: '20px auto' }}>

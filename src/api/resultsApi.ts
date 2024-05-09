@@ -5,5 +5,5 @@ export const getTaxFormsByUserId = (userId: number) => {
 }
 
 export const calculateAndSaveTaxReturnsForUser = (userId: number) => {
-    return apiClient.post(`/tax-return/calculateTaxReturn/${userId}`);
+    return apiClient.put(`/tax-return/calculateTaxReturn/${userId}`);
 }

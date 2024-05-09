@@ -50,10 +50,9 @@ function NavBar() {
         <button onClick={handleLogout} key="logout">Logout</button>
     ];
     // These are the paths that the NavBar will only be shown on
-    const visiblePaths = ['/main', '/results', '/UserTaxes', '/taxpayer-info', '/taxes/:formType/:formID', '/taxes/:formType', '/UserTaxes'];
+    const visiblePaths = ['/main', '/results', '/userTaxes', '/taxpayer-info', '/UserTaxes', '/taxes/W2', '/taxes/1099'];
 
-    // If the path user is on isnot in the visiblePaths, return null
-    if (!visiblePaths.includes(location.pathname)) {
+    if (!visiblePaths) {
         return null;
     }
 
@@ -66,7 +65,7 @@ function NavBar() {
                         <>
                             <a href="/" title="Home" aria-label="Home">
 
-                            <Lottie animationData={JoeAndEricLogo}  style={{ width: "150px" }} /> 
+                            <Lottie animationData={JoeAndEricLogo}  style={{ width: "150px" }} />
                             </a>
                             <PrimaryNav items={items}  />
                         </>

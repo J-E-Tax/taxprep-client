@@ -27,7 +27,7 @@ const DisplayTaxForms: React.FC = () => {
     // Automatically trigger a single re-render after component mounts
     const timer = setTimeout(() => {
       setShouldRerender(true);
-    }, 1000); // Adjust the delay (in milliseconds) as needed
+    }, 2000); // Adjust the delay (in milliseconds) as needed
 
     return () => clearTimeout(timer); // Cleanup timer on component unmount
   }, []); // Run only once on component mount
@@ -53,16 +53,16 @@ const DisplayTaxForms: React.FC = () => {
     const cards = data.map((item) => {
       // Parse the formDetails field if it exists
       const parsedFormDetails: w2 = JSON.parse(item.formDetails as unknown as string);
-      console.log(parsedFormDetails);
-      console.log(item);
+      // console.log(parsedFormDetails.cname);
+      // console.log(item);
 
       return (
         <Card key={item.taxFormId}>
           <CardHeader>
-            <h2>{item.formType} {parsedFormDetails.c}</h2>
+            <h2>{item.formType} | {parsedFormDetails.cname}</h2>
           </CardHeader>
           <CardBody>
-            <p>{item.status}</p>
+            <p>Current Status: {item.status}</p>
           </CardBody>
           <CardFooter>
             <Button type='button' onClick={() => handleRedirectEdit(item.taxFormId, item.formType)}>Edit</Button>

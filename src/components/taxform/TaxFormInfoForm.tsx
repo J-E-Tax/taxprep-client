@@ -443,6 +443,7 @@ function TaxFormInfoForm () {
             </FormGroup>
             
             
+            
         </Form>
         </div>
             </Grid>
@@ -590,6 +591,17 @@ function TaxFormInfoForm () {
                     name="formDetails.e"
                     type="text"
                     defaultValue={taxformInfo.formDetails.e}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
+                />
+            </FormGroup>
+            <FormGroup>
+                <Label htmlFor="rtin">Recipient's TIN</Label>
+                <TextInput
+                    id='rtin'
+                    name='formDetails.d'
+                    type='text'
+                    defaultValue={taxformInfo.formDetails.d}
                     //onChange={handleChange}
                     onBlur={handleBlur}
                 />
@@ -992,7 +1004,7 @@ function TaxFormInfoForm () {
                                         <p>Employer Identification Number: {taxformInfo.formDetails.b}</p>
                                         <p>Employer's Name: {taxformInfo.formDetails.cname}</p>
                                         <p>Employer's Address and ZIP: {taxformInfo.formDetails.cstreet} {taxformInfo.formDetails.ccity} {taxformInfo.formDetails.cstate} {taxformInfo.formDetails.czip}</p>
-                                        <p>Control Number: {taxformInfo.formDetails.d}</p>
+                                        
 
                                     </CardBody>
                                     <CardFooter>
@@ -1007,8 +1019,9 @@ function TaxFormInfoForm () {
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Employee's First and Last Name: {taxformInfo.formDetails.l1}</p>
-                                        <p>Employee's Address and ZIP: {taxformInfo.formDetails.fstreet} {taxformInfo.formDetails.fcity} {taxformInfo.formDetails.fstate} {taxformInfo.formDetails.fzip}</p>
+                                        <p>Employee's First and Last Name: {taxformInfo.formDetails.e}</p>
+                                        <p>Employee's Address and ZIP: {taxformInfo.formDetails.fstreet}, {taxformInfo.formDetails.fcity}, {taxformInfo.formDetails.fstate}, {taxformInfo.formDetails.fzip}</p>
+                                        <p>Recipient's TIN: {taxformInfo.formDetails.d}</p>
                                     </CardBody>
                                     <CardFooter>
                                         <Button type='button' onClick={() => goToStep(1)}>Edit</Button>

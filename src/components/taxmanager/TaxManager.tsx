@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { w2 } from '../../features/taxforminfo/taxformInfoSlice';
 import ResultsModal from '../results/ResultsModal';
 import Cookies from 'universal-cookie';
+import { useTranslation } from 'react-i18next';
 const cookies = new Cookies();
 
 const DisplayTaxForms: React.FC = () => {
@@ -15,7 +16,7 @@ const DisplayTaxForms: React.FC = () => {
   const [dataList, setDataList] = useState<TaxFormInfoState[]>([]);
   const [cardComponents, setCardComponents] = useState<JSX.Element[]>([]);
   const history = useNavigate();
-
+  const { t } = useTranslation();
   const [shouldRerender, setShouldRerender] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -28,7 +29,7 @@ const DisplayTaxForms: React.FC = () => {
     // Automatically trigger a single re-render after component mounts
     const timer = setTimeout(() => {
       setShouldRerender(true);
-    }, 1000); // Adjust the delay (in milliseconds) as needed
+    }, 2000); // Adjust the delay (in milliseconds) as needed
 
     return () => clearTimeout(timer); // Cleanup timer on component unmount
   }, []); // Run only once on component mount
@@ -54,19 +55,19 @@ const DisplayTaxForms: React.FC = () => {
     const cards = data.map((item) => {
       // Parse the formDetails field if it exists
       const parsedFormDetails: w2 = JSON.parse(item.formDetails as unknown as string);
-      console.log(parsedFormDetails);
-      console.log(item);
+      // console.log(parsedFormDetails.cname);
+      // console.log(item);
 
       return (
         <Card key={item.taxFormId}>
           <CardHeader>
-            <h2>{item.formType} {parsedFormDetails.c}</h2>
+            <h2>{item.formType} | {parsedFormDetails.cname}</h2>
           </CardHeader>
           <CardBody>
-            <p>{item.status}</p>
+            <p>{t('taxforminfo.cus')}: {item.status}</p>
           </CardBody>
           <CardFooter>
-            <Button type='button' onClick={() => handleRedirectEdit(item.taxFormId, item.formType)}>Edit</Button>
+            <Button type='button' onClick={() => handleRedirectEdit(item.taxFormId, item.formType)}>{t('taxforminfo.edit')}</Button>
           </CardFooter>
         </Card>
       );
@@ -101,14 +102,14 @@ const DisplayTaxForms: React.FC = () => {
             <CardGroup>
             <Card>
                 <CardHeader>
-                  <p>File a New Tax Form!</p>
+                  <p>{t('taxforminfo.fantf')}</p>
                 </CardHeader>
                 <CardBody>
 
                 </CardBody>
                 <CardFooter>
-                  <Button type='button' onClick={handleRedirect}>File W2!</Button>
-                  <Button type='button' onClick={handleRedirect1099}>File 1099!</Button>
+                  <Button type='button' onClick={handleRedirect}>{t('taxforminfo.fw2')}</Button>
+                  <Button type='button' onClick={handleRedirect1099}>{t('taxforminfo.f1099')}</Button>
                 </CardFooter>
               </Card>
               {/* Render a card for each tax form */}

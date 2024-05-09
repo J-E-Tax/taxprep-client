@@ -7,6 +7,7 @@ import { getTaxFormInfo } from '../../api/taxformApi';
 import { RootState } from '../../app/store';
 import { setTaxFormInfo, TaxFormInfoState } from '../../features/taxforminfo/taxformInfoSlice';
 import { TextInputProps } from '@trussworks/react-uswds/lib/components/forms/TextInput/TextInput';
+import { useTranslation } from 'react-i18next';
 
 // function selectTaxForm () {
 //     const {formType, formID} = useParams();
@@ -18,6 +19,7 @@ function TaxFormInfoForm () {
     const dispatch = useDispatch();
     const {formType, formID} = useParams();
     const userId = useSelector((state: RootState) => state.auth.userId);
+    const { t } = useTranslation();
     console.log("before If Statement", formID)
     
     const [currentStep, setCurrentStep] = useState<number>(0); 
@@ -229,10 +231,10 @@ function TaxFormInfoForm () {
                 ))}
             </StepIndicator>
                     <Button type='button' onClick={handlePreviousStep} disabled={currentStep === 0}>
-                        Previous
+                    {t('taxforminfo.prev')}
                     </Button>
                     <Button type='button' onClick={handleNextStep} disabled={currentStep === steps.length - 1}>
-                        Next
+                    {t('taxforminfo.next')}
                     </Button>
             
                     {/* Render current step content based on currentStep state */}
@@ -270,7 +272,7 @@ function TaxFormInfoForm () {
                 <Fieldset legend="Employer's Address" legendStyle='large'>
                     
                     <FormGroup>
-                        <Label htmlFor="cstreet">Street Address</Label>
+                        <Label htmlFor="cstreet">{t('taxforminfo.streetAddress')}</Label>
                         <TextInput
                             id='cstreet'
                             name='formDetails.cstreet'
@@ -281,7 +283,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="ccity">City</Label>
+                        <Label htmlFor="ccity">{t('taxforminfo.city')}</Label>
                         <TextInput
                             id='ccity'
                             name='formDetails.ccity'
@@ -292,7 +294,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="cstate">State</Label>
+                        <Label htmlFor="cstate">{t('taxforminfo.state')}</Label>
                         <TextInput
                             id='cstate'
                             name='formDetails.cstate'
@@ -303,7 +305,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="czip">ZIP Code</Label>
+                        <Label htmlFor="czip">{t('taxforminfo.zip')}</Label>
                         <TextInput
                             id='czip'
                             name='formDetails.czip'
@@ -319,7 +321,7 @@ function TaxFormInfoForm () {
             
 
             <FormGroup>
-                <Label htmlFor="ein">Employer Identification Number</Label>
+                <Label htmlFor="ein">{t('taxforminfo.ein')}</Label>
                 <TextInput
                     id="ein"
                     name="formDetails.b"
@@ -331,7 +333,7 @@ function TaxFormInfoForm () {
                 />
             </FormGroup>
             <FormGroup>
-                        <Label htmlFor="cname">Employer's Name</Label>
+                        <Label htmlFor="cname">{t('taxforminfo.cname')}</Label>
                         <TextInput
                             id='cname'
                             name='formDetails.cname'
@@ -343,7 +345,7 @@ function TaxFormInfoForm () {
                     </FormGroup>
             
             <FormGroup>
-                <Label htmlFor="cn">Control Number</Label>
+                <Label htmlFor="cn">{t('taxforminfo.controlNumber')}</Label>
                 <TextInput
                     id='cn'
                     name='formDetails.d'
@@ -373,7 +375,7 @@ function TaxFormInfoForm () {
                 <Fieldset legend="Payer's Address" legendStyle='large'>
                     
                     <FormGroup>
-                        <Label htmlFor="cstreet">Street Address</Label>
+                    <Label htmlFor="cstreet">{t('taxforminfo.streetAddress')}</Label>
                         <TextInput
                             id='cstreet'
                             name='formDetails.cstreet'
@@ -384,7 +386,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="ccity">City</Label>
+                        <Label htmlFor="ccity">{t('taxforminfo.city')}</Label>
                         <TextInput
                             id='ccity'
                             name='formDetails.ccity'
@@ -395,7 +397,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="cstate">State</Label>
+                    <Label htmlFor="cstate">{t('taxforminfo.state')}</Label>
                         <TextInput
                             id='cstate'
                             name='formDetails.cstate'
@@ -406,7 +408,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="czip">ZIP Code</Label>
+                    <Label htmlFor="czip">{t('taxforminfo.zip')}</Label>
                         <TextInput
                             id='czip'
                             name='formDetails.czip'
@@ -419,7 +421,7 @@ function TaxFormInfoForm () {
                 </Fieldset>
             </div>
             <FormGroup>
-                <Label htmlFor="ein">Payer's TIN</Label>
+                <Label htmlFor="ein">{t('taxforminfo.ptin')}</Label>
                 <TextInput
                     id="ptin"
                     name="formDetails.b"
@@ -431,7 +433,7 @@ function TaxFormInfoForm () {
                 />
             </FormGroup>
             <FormGroup>
-                <Label htmlFor="cname">Payer's Name</Label>
+                <Label htmlFor="cname">{t('taxforminfo.pname')}</Label>
                 <TextInput
                     id='cname'
                     name='formDetails.cname'
@@ -441,6 +443,7 @@ function TaxFormInfoForm () {
                     onBlur={handleBlur}
                 />
             </FormGroup>
+            
             
             
         </Form>
@@ -463,7 +466,7 @@ function TaxFormInfoForm () {
                 <Fieldset legend="Employee's Address" legendStyle='large'>
                     
                     <FormGroup>
-                        <Label htmlFor="fstreet">Street Address</Label>
+                    <Label htmlFor="fstreet">{t('taxforminfo.streetAddress')}</Label>
                         <TextInput
                             id='fstreet'
                             name='formDetails.fstreet'
@@ -474,7 +477,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="fcity">City</Label>
+                    <Label htmlFor="fcity">{t('taxforminfo.city')}</Label>
                         <TextInput
                             id='fcity'
                             name='formDetails.fcity'
@@ -485,7 +488,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="fstate">State</Label>
+                    <Label htmlFor="fstate">{t('taxforminfo.state')}</Label>
                         <TextInput
                             id='fstate'
                             name='formDetails.fstate'
@@ -496,7 +499,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="fzip">ZIP Code</Label>
+                    <Label htmlFor="fzip">{t('taxforminfo.zip')}</Label>
                         <TextInput
                             id='fzip'
                             name='formDetails.fzip'
@@ -509,7 +512,7 @@ function TaxFormInfoForm () {
                 </Fieldset>
             </div>
             <FormGroup>
-                <Label htmlFor="flname">Employee's first and last name</Label>
+                <Label htmlFor="flname">{t('taxforminfo.flname')}</Label>
                 <TextInput
                     id="flname"
                     name="formDetails.e"
@@ -538,7 +541,7 @@ function TaxFormInfoForm () {
                 <Fieldset legend="Employee's Address" legendStyle='large'>
                     
                     <FormGroup>
-                        <Label htmlFor="fstreet">Street Address</Label>
+                    <Label htmlFor="fstreet">{t('taxforminfo.streetAddress')}</Label>
                         <TextInput
                             id='fstreet'
                             name='formDetails.fstreet'
@@ -549,7 +552,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="fcity">City</Label>
+                    <Label htmlFor="fcity">{t('taxforminfo.city')}</Label>
                         <TextInput
                             id='fcity'
                             name='formDetails.fcity'
@@ -560,7 +563,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="fstate">State</Label>
+                    <Label htmlFor="fstate">{t('taxforminfo.state')}</Label>
                         <TextInput
                             id='fstate'
                             name='formDetails.fstate'
@@ -571,7 +574,7 @@ function TaxFormInfoForm () {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label htmlFor="fzip">ZIP Code</Label>
+                    <Label htmlFor="fzip">{t('taxforminfo.zip')}</Label>
                         <TextInput
                             id='fzip'
                             name='formDetails.fzip'
@@ -584,12 +587,23 @@ function TaxFormInfoForm () {
                 </Fieldset>
             </div>
             <FormGroup>
-                <Label htmlFor="flname">Employee's first and last name</Label>
+                <Label htmlFor="flname">{t('taxforminfo.flname')}</Label>
                 <TextInput
                     id="flname"
                     name="formDetails.e"
                     type="text"
                     defaultValue={taxformInfo.formDetails.e}
+                    //onChange={handleChange}
+                    onBlur={handleBlur}
+                />
+            </FormGroup>
+            <FormGroup>
+                <Label htmlFor="rtin">{t('taxforminfo.rtin')}</Label>
+                <TextInput
+                    id='rtin'
+                    name='formDetails.d'
+                    type='text'
+                    defaultValue={taxformInfo.formDetails.d}
                     //onChange={handleChange}
                     onBlur={handleBlur}
                 />
@@ -612,7 +626,7 @@ function TaxFormInfoForm () {
 
            
             <FormGroup>
-                <Label htmlFor="wtc">Wages, Tips, Compensation</Label>
+                <Label htmlFor="wtc">{t('taxforminfo.wtc')}</Label>
                 <TextInput
                     id="wtc"
                     name="formDetails.l1"
@@ -623,7 +637,7 @@ function TaxFormInfoForm () {
                 />
             </FormGroup>
             <FormGroup>
-                <Label htmlFor="ssw">Social Security Wages</Label>
+                <Label htmlFor="ssw">{t('taxforminfo.ssw')}</Label>
                 <TextInput
                     id="ssw"
                     name="formDetails.l3"
@@ -634,7 +648,7 @@ function TaxFormInfoForm () {
                 />
             </FormGroup>
             <FormGroup>
-                <Label htmlFor="mwt">Medicare Wages and Tips</Label>
+                <Label htmlFor="mwt">{t('taxforminfo.mwt')}</Label>
                 <TextInput
                     id="mwt"
                     name="formDetails.l5"
@@ -645,7 +659,7 @@ function TaxFormInfoForm () {
                 />
             </FormGroup>
             <FormGroup>
-                <Label htmlFor="sst">Social Security Tips</Label>
+                <Label htmlFor="sst">{t('taxforminfo.sst')}</Label>
                 <TextInput
                     id="sst"
                     name="formDetails.l7"
@@ -656,7 +670,7 @@ function TaxFormInfoForm () {
                 />
             </FormGroup>
             <FormGroup>
-                <Label htmlFor="at">Allocated Tips</Label>
+                <Label htmlFor="at">{t('taxforminfo.at')}</Label>
                 <TextInput
                     id="at"
                     name="formDetails.l8"
@@ -679,7 +693,7 @@ function TaxFormInfoForm () {
                 <div className="bg-white padding-y-3 padding-x-15 border border-base-lighter">
                     <Form onSubmit={handleSubmit}>
                         <FormGroup>
-                            <Label htmlFor="nec">Nonemployee Compensation</Label>
+                            <Label htmlFor="nec">{t('taxforminfo.nec')}</Label>
                             <TextInput
                                 id="nec"
                                 name="formDetails.l1"
@@ -707,7 +721,7 @@ function TaxFormInfoForm () {
                             <Grid row gap={6}>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="fitw">Federal Income Tax Withheld</Label>
+                                        <Label htmlFor="fitw">{t('taxforminfo.fitw')}</Label>
                                         <TextInput
                                             id="fitw"
                                             name="formDetails.l2"
@@ -720,7 +734,7 @@ function TaxFormInfoForm () {
                                 </Grid>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="sstw">Social Security Tax Withheld</Label>
+                                        <Label htmlFor="sstw">{t('taxforminfo.sstw')}</Label>
                                         <TextInput
                                             id="sstw"
                                             name="formDetails.l4"
@@ -733,7 +747,7 @@ function TaxFormInfoForm () {
                                     </Grid>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="mtw">Medicare Tax Withheld</Label>
+                                        <Label htmlFor="mtw">{t('taxforminfo.mtw')}</Label>
                                         <TextInput
                                             id="mtw"
                                             name="formDetails.l6"
@@ -746,7 +760,7 @@ function TaxFormInfoForm () {
                                 </Grid>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="sst">Social Security Tips</Label>
+                                        <Label htmlFor="sst">{t('taxforminfo.sst')}</Label>
                                         
                                             <TextInput
                                                 id="sst"
@@ -762,7 +776,7 @@ function TaxFormInfoForm () {
                                 
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="dcb">Dependent Care Benefits</Label>
+                                        <Label htmlFor="dcb">{t('taxforminfo.dcb')}</Label>
                                         <TextInput
                                             id="dcb"
                                             name="formDetails.l10"
@@ -775,7 +789,7 @@ function TaxFormInfoForm () {
                                 </Grid>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="nqp">Non Qualified Plans</Label>
+                                        <Label htmlFor="nqp">{t('taxforminfo.nqp')}</Label>
                                         <TextInput
                                             id="nqp"
                                             name="formDetails.l11"
@@ -788,7 +802,7 @@ function TaxFormInfoForm () {
                                 </Grid>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="uss">Uncollected Social Security Tax On Tips</Label>
+                                        <Label htmlFor="uss">{t('taxforminfo.uss')}</Label>
                                         <TextInput
                                             id="uss"
                                             name="formDetails.l12a"
@@ -801,7 +815,7 @@ function TaxFormInfoForm () {
                                 </Grid>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="umt">Uncollected Medicare Tax On Tips</Label>
+                                        <Label htmlFor="umt">{t('taxforminfo.umt')}</Label>
                                         <TextInput
                                             id="umt"
                                             name="formDetails.l12b"
@@ -814,7 +828,7 @@ function TaxFormInfoForm () {
                                 </Grid>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="tcg">Taxable Cost of Group-Term Life Insurance over 50k</Label>
+                                        <Label htmlFor="tcg">{t('taxforminfo.tcg')}</Label>
                                         <TextInput
                                             id="tcg"
                                             name="formDetails.l12c"
@@ -827,7 +841,7 @@ function TaxFormInfoForm () {
                                 </Grid>
                                 <Grid col={6}>
                                     <FormGroup>
-                                        <Label htmlFor="ed">Elective deferrals to a section 401k arrangement</Label>
+                                        <Label htmlFor="ed">{t('taxforminfo.tcg')}</Label>
                                         <TextInput
                                             id="ed"
                                             name="formDetails.l12d"
@@ -854,7 +868,7 @@ function TaxFormInfoForm () {
                         
                         
                         <FormGroup>
-                            <Label htmlFor="fitw">Federal Income Tax Withheld</Label>
+                            <Label htmlFor="fitw">{t('taxforminfo.fitw')}</Label>
                             <TextInput
                                 id="fitw"
                                 name="formDetails.l2"
@@ -897,79 +911,79 @@ function TaxFormInfoForm () {
                             <Grid col={6}>
                                 <Card>
                                     <CardHeader>
-                                        <h2>Employer Information</h2>
+                                        <h2>{t('taxforminfo.ei')}</h2>
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Employer Identification Number: {taxformInfo.formDetails.b}</p>
-                                        <p>Employer's Name: {taxformInfo.formDetails.cname}</p>
-                                        <p>Employer's Address and ZIP: {taxformInfo.formDetails.cstreet} {taxformInfo.formDetails.ccity} {taxformInfo.formDetails.cstate} {taxformInfo.formDetails.czip}</p>
-                                        <p>Control Number: {taxformInfo.formDetails.d}</p>
+                                        <p>{t('taxforminfo.ein')}: {taxformInfo.formDetails.b}</p>
+                                        <p>{t('taxforminfo.cname')}: {taxformInfo.formDetails.cname}</p>
+                                        <p>{t('taxforminfo.eaaz')}: {taxformInfo.formDetails.cstreet} {taxformInfo.formDetails.ccity} {taxformInfo.formDetails.cstate} {taxformInfo.formDetails.czip}</p>
+                                        <p>{t('taxforminfo.controlNumber')}: {taxformInfo.formDetails.d}</p>
 
                                     </CardBody>
                                     <CardFooter>
-                                        <Button type='button' onClick={() => goToStep(0)}>Edit</Button>
+                                        <Button type='button' onClick={() => goToStep(0)}>{t('taxforminfo.edit')}</Button>
                                     </CardFooter>
                                 </Card>
                             </Grid>
                             <Grid col={6}>
                                 <Card>
                                     <CardHeader>
-                                        <h2>Personal Information</h2>
+                                        <h2>{t('taxforminfo.pi')}</h2>
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Employee's First and Last Name: {taxformInfo.formDetails.l1}</p>
-                                        <p>Employee's Address and ZIP: {taxformInfo.formDetails.fstreet} {taxformInfo.formDetails.fcity} {taxformInfo.formDetails.fstate} {taxformInfo.formDetails.fzip}</p>
+                                        <p>{t('taxforminfo.flname')}: {taxformInfo.formDetails.l1}</p>
+                                        <p>{t('taxforminfo.empaaz')}: {taxformInfo.formDetails.fstreet} {taxformInfo.formDetails.fcity} {taxformInfo.formDetails.fstate} {taxformInfo.formDetails.fzip}</p>
                                     </CardBody>
                                     <CardFooter>
-                                        <Button type='button' onClick={() => goToStep(1)}>Edit</Button>
+                                        <Button type='button' onClick={() => goToStep(1)}>{t('taxforminfo.edit')}</Button>
                                     </CardFooter>
                                 </Card>
                             </Grid>
                             <Grid col={6}>
                                 <Card>
                                     <CardHeader>
-                                        <h2>Financial Information</h2>
+                                        <h2>{t('taxforminfo.fi')}</h2>
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Wages, Tips, Compensation: {taxformInfo.formDetails.l1}</p>
-                                        <p>Social Security Wages: {taxformInfo.formDetails.l3}</p>
-                                        <p>Medicare Wages and Tips: {taxformInfo.formDetails.l5}</p>
-                                        <p>Social Security Tips: {taxformInfo.formDetails.l7}</p>
-                                        <p>Allocated Tips: {taxformInfo.formDetails.l8}</p>
+                                        <p>{t('taxforminfo.wtc')}: {taxformInfo.formDetails.l1}</p>
+                                        <p>{t('taxforminfo.ssw')}: {taxformInfo.formDetails.l3}</p>
+                                        <p>{t('taxforminfo.mwt')}: {taxformInfo.formDetails.l5}</p>
+                                        <p>{t('taxforminfo.sst')}: {taxformInfo.formDetails.l7}</p>
+                                        <p>{t('taxforminfo.at')}: {taxformInfo.formDetails.l8}</p>
                                     </CardBody>
                                     <CardFooter>
-                                        <Button type='button' onClick={() => goToStep(2)}>Edit</Button>
+                                        <Button type='button' onClick={() => goToStep(2)}>{t('taxforminfo.edit')}</Button>
                                     </CardFooter>
                                 </Card>
                             </Grid>
                             <Grid col={6}>
                                 <Card>
                                     <CardHeader>
-                                        <h2>Withholdings And Miscellaneous </h2>
+                                        <h2>{t('taxforminfo.wiam')} </h2>
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Federal Income Tax Withheld: {taxformInfo.formDetails.l2}</p>
-                                        <p>Social Security Tax Withheld: {taxformInfo.formDetails.l4}</p>
-                                        <p>Medicare Tax Withheld: {taxformInfo.formDetails.l6}</p>
-                                        <p>Dependent Care Benefits: {taxformInfo.formDetails.l10}</p>
-                                        <p>Non Qualified Plans: {taxformInfo.formDetails.l11}</p>
-                                        <p>Uncollected Social Security Tax On Tips: {taxformInfo.formDetails.l12a}</p>
-                                        <p>Uncollected Medicare Tax On Tips: {taxformInfo.formDetails.l12b}</p>
-                                        <p>Taxable Cost of Group-Term Life Insurance over 50k: {taxformInfo.formDetails.l12c}</p>
-                                        <p>Elective deferrals to a section 401k arrangement: {taxformInfo.formDetails.l12d}</p>
+                                        <p>{t('taxforminfo.fitw')}: {taxformInfo.formDetails.l2}</p>
+                                        <p>{t('taxforminfo.sstw')}: {taxformInfo.formDetails.l4}</p>
+                                        <p>{t('taxforminfo.mtw')}: {taxformInfo.formDetails.l6}</p>
+                                        <p>{t('taxforminfo.dcb')}: {taxformInfo.formDetails.l10}</p>
+                                        <p>{t('taxforminfo.nqp')}: {taxformInfo.formDetails.l11}</p>
+                                        <p>{t('taxforminfo.uss')}: {taxformInfo.formDetails.l12a}</p>
+                                        <p>{t('taxforminfo.umt')}: {taxformInfo.formDetails.l12b}</p>
+                                        <p>{t('taxforminfo.tcg')}: {taxformInfo.formDetails.l12c}</p>
+                                        <p>{t('taxforminfo.ed')}: {taxformInfo.formDetails.l12d}</p>
                                     </CardBody>
                                     <CardFooter>
-                                        <Button type='button' onClick={() => goToStep(3)}>Edit</Button>
+                                        <Button type='button' onClick={() => goToStep(3)}>{t('taxforminfo.edit')}</Button>
                                     </CardFooter>
                                 </Card>
                             </Grid>
                             
                         </Grid>
-                        <Button type="button" onClick={handleSubmit}>Submit</Button>
+                        <Button type="button" onClick={handleSubmit}>{t('taxforminfo.submit')}</Button>
                     </CardGroup>
                 </Grid>
                 
@@ -985,69 +999,70 @@ function TaxFormInfoForm () {
                             <Grid col={6}>
                                 <Card>
                                     <CardHeader>
-                                        <h2>Employer Information</h2>
+                                        <h2>{t('taxforminfo.ei')}</h2>
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Employer Identification Number: {taxformInfo.formDetails.b}</p>
-                                        <p>Employer's Name: {taxformInfo.formDetails.cname}</p>
-                                        <p>Employer's Address and ZIP: {taxformInfo.formDetails.cstreet} {taxformInfo.formDetails.ccity} {taxformInfo.formDetails.cstate} {taxformInfo.formDetails.czip}</p>
-                                        <p>Control Number: {taxformInfo.formDetails.d}</p>
+                                        <p>{t('taxforminfo.ein')}: {taxformInfo.formDetails.b}</p>
+                                        <p>{t('taxforminfo.cname')} {taxformInfo.formDetails.cname}</p>
+                                        <p>{t('taxforminfo.eaaz')}: {taxformInfo.formDetails.cstreet} {taxformInfo.formDetails.ccity} {taxformInfo.formDetails.cstate} {taxformInfo.formDetails.czip}</p>
+                                        
 
                                     </CardBody>
                                     <CardFooter>
-                                        <Button type='button' onClick={() => goToStep(0)}>Edit</Button>
+                                        <Button type='button' onClick={() => goToStep(0)}>{t('taxforminfo.edit')}</Button>
                                     </CardFooter>
                                 </Card>
                             </Grid>
                             <Grid col={6}>
                                 <Card>
                                     <CardHeader>
-                                        <h2>Personal Information</h2>
+                                        <h2>{t('taxforminfo.pi')}</h2>
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Employee's First and Last Name: {taxformInfo.formDetails.l1}</p>
-                                        <p>Employee's Address and ZIP: {taxformInfo.formDetails.fstreet} {taxformInfo.formDetails.fcity} {taxformInfo.formDetails.fstate} {taxformInfo.formDetails.fzip}</p>
+                                        <p>{t('taxforminfo.flname')}: {taxformInfo.formDetails.e}</p>
+                                        <p>{t('taxforminfo.empaaz')}: {taxformInfo.formDetails.fstreet}, {taxformInfo.formDetails.fcity}, {taxformInfo.formDetails.fstate}, {taxformInfo.formDetails.fzip}</p>
+                                        <p>{t('taxforminfo.rtin')}: {taxformInfo.formDetails.d}</p>
                                     </CardBody>
                                     <CardFooter>
-                                        <Button type='button' onClick={() => goToStep(1)}>Edit</Button>
+                                        <Button type='button' onClick={() => goToStep(1)}>{t('taxforminfo.edit')}</Button>
                                     </CardFooter>
                                 </Card>
                             </Grid>
                             <Grid col={6}>
                                 <Card>
                                     <CardHeader>
-                                        <h2>Financial Information</h2>
+                                        <h2>{t('taxforminfo.fi')}</h2>
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Wages, Tips, Compensation: {taxformInfo.formDetails.l1}</p>
+                                        <p>{t('taxforminfo.wtc')}: {taxformInfo.formDetails.l1}</p>
                                         
                                     </CardBody>
                                     <CardFooter>
-                                        <Button type='button' onClick={() => goToStep(2)}>Edit</Button>
+                                        <Button type='button' onClick={() => goToStep(2)}>{t('taxforminfo.edit')}</Button>
                                     </CardFooter>
                                 </Card>
                             </Grid>
                             <Grid col={6}>
                                 <Card>
                                     <CardHeader>
-                                        <h2>Withholdings And Miscellaneous </h2>
+                                        <h2>{t('taxforminfo.wiam')} </h2>
                                     </CardHeader>
 
                                     <CardBody>
-                                        <p>Federal Income Tax Withheld: {taxformInfo.formDetails.l2}</p>
+                                        <p>{t('taxforminfo.fitw')}: {taxformInfo.formDetails.l2}</p>
                                         
                                     </CardBody>
                                     <CardFooter>
-                                        <Button type='button' onClick={() => goToStep(3)}>Edit</Button>
+                                        <Button type='button' onClick={() => goToStep(3)}>{t('taxforminfo.edit')}</Button>
                                     </CardFooter>
                                 </Card>
                             </Grid>
                             
                         </Grid>
-                        <Button type="button" onClick={handleSubmit}>Submit</Button>
+                        <Button type="button" onClick={handleSubmit}>{t('taxforminfo.submit')}</Button>
                     </CardGroup>
                 </Grid>
                 

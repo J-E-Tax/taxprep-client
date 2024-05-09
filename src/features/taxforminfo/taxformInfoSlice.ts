@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface w2 {
+export interface w2 {
         a : string,
         b : string,
         cname: string,

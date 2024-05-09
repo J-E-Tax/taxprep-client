@@ -10,24 +10,24 @@ interface TaxForm {
 
 const apiClientJJ = axios.create({
     // hiding the URL in the .env file
-    baseURL: "http://localhost:8080/taxform",
+    baseURL: `${import.meta.env.VITE_REACT_URL}`,
     headers: {
         'Content-Type': 'application/json',
       }
 });
 
 export const getTaxFormInfo = (taxFormId: number) => {
-    return apiClientJJ.get(`/taxes/form/${taxFormId}`);
+    return apiClientJJ.get(`/taxform/taxes/form/${taxFormId}`);
 }
 
 export const createTaxForm = (taxForm : TaxForm) => {
-    return apiClientJJ.post(`/create`, taxForm);
+    return apiClientJJ.post(`/taxform/create`, taxForm);
 }
 
 export const updateTaxForm = (taxForm : TaxForm) => {
-    return apiClientJJ.put(`/taxes/update`, taxForm);
+    return apiClientJJ.put(`/taxform/taxes/update`, taxForm);
 }
 
 export const getTaxForms = (userId: number) => {
-    return apiClientJJ.get(`/taxes/form/${userId}`);
+    return apiClientJJ.get(`/taxform/taxes/form/${userId}`);
 }

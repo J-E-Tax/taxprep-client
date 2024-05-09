@@ -98,7 +98,7 @@ function LoginForm() {
                   <div className="usa-prose">
                     <p>
                       If you have a google account,
-                      please use [secondary Single Sign On (SSO)].
+                      please sign in with your google account.
                     </p>
                     <p>
                       <Button type="button" outline={true} onClick={handleGoogleOAuthLogin} >

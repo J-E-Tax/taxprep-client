@@ -16,5 +16,54 @@
       "freeFederalHeading": "免费联邦申报给每个人",
       "experienceSimplicity": "体验与J&E Tax Pro申报税务的简单性，您可以免费处理联邦税务申报！我们的用户友好平台确保您在税务季节中轻松、准确地导航，给您带来心安。加入成千上万的人，他们在不花一分钱的情况下最大化退款并最小化税务负担。",
       "callToAction": "行动召唤"
-    }
+    },
+    "taxpayerInfo": {
+        "title": "告诉我们一些关于你的信息",
+        "firstName": {
+          "label": "名字",
+          "placeholder": "Eric",
+          "error": "名字应只包含字母。"
+        },
+        "middleName": {
+          "label": "中间名",
+          "placeholder": "Joe",
+          "error": "中间名应只包含字母。"
+        },
+        "lastName": {
+          "label": "姓氏",
+          "placeholder": "Chang",
+          "error": "姓氏应只包含字母。"
+        },
+        "occupation": {
+          "label": "职业",
+          "placeholder": "软件开发者"
+        },
+        "ssn": {
+          "label": "社会安全号码",
+          "error": "请输入有效的社会安全号码（例如，123-45-6789）。"
+        },
+        "dob": {
+          "label": "出生日期"
+        },
+        "phoneNumber": {
+          "label": "电话号码",
+          "error": "请输入有效的电话号码（例如，636-555-1234）。"
+        },
+        "address": {
+          "street": {
+            "label": "街道"
+          },
+          "city": {
+            "label": "城市"
+          },
+          "state": {
+            "label": "州"
+          },
+          "zip": {
+            "label": "邮政编码",
+            "error": "请输入5位数字的邮政编码。"
+          }
+        },
+        "submitButton": "保存并继续"
+      }
   }

@@ -92,6 +92,7 @@ const DisplayTaxForms: React.FC = () => {
     history(`/taxes/${type}/${page}`);
   };
 
+
   return (
     <div>
       {/* Render the Card components */}
